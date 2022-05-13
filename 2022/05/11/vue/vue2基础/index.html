@@ -1,0 +1,926 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/hzx17/picgodemo/img2.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="rgba(37, 45, 56, 0.4)">
+  <meta name="author" content="何十七">
+  <meta name="keywords" content="it博客">
+  
+    <meta name="description" content="这是vue2基础知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue2基础知识">
+<meta property="og:url" content="https://hzx17.github.io/2022/05/11/vue/vue2%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="blog-he">
+<meta property="og:description" content="这是vue2基础知识">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hzx17/picgodemo/img/vue1.jpg">
+<meta property="article:published_time" content="2022-05-11T14:33:27.000Z">
+<meta property="article:modified_time" content="2022-05-12T06:33:24.990Z">
+<meta property="article:author" content="何十七">
+<meta property="article:tag" content="vue基础">
+<meta property="article:tag" content="vue2">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hzx17/picgodemo/img/vue1.jpg">
+  
+  
+  <title>vue2基础知识 - blog-he</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/cursor.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/scollbar.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"hzx17.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                博客
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/photos/">
+                <i class="iconfont icon-instagram-fill"></i>
+                相册
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/message/">
+                <i class="iconfont icon-archive-fill"></i>
+                留言板
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/hzx17/picgodemo/img/vue1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="vue2基础知识">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      何十七
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-11 22:33" pubdate>
+        2022年5月11日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      67 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue2基础知识</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：1 天前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="初始vue"><a href="#初始vue" class="headerlink" title="初始vue"></a>初始vue</h1><div class="hljs code-wrapper"><pre><code class="hljs">  -一个容器只能对应一个实例，一一对应的关系
+ -想让vue工作，就要实例化vue，且要传入一个配置对象，即挂载点
+ -root容器中的代码依旧符合html规范，只不过混入了一些特殊的vue语法
+ -root容器中的代码被称为【vue】模板
+ -真实的开发环境是会配合这组件一起使用
+ -&#123;&#123;xxxx&#125;中要写js表达式，xxx会自动读取更新
+
+
+
+# 模板指令
+      #插值语法
+            &#123;&#123;&#125;&#125;,通常使用在标签体中，即两个标签空格中
+  #指令语法
+          通常用于解析标签，（包括标签属性，标签体的内容，给标签绑定事件）
+          例如：v-bind:href=&quot;xxxx&quot;,xxx同时也是js表达式，简写式为 :href=&quot;xxxx&quot;,加了：就代表寻找表达式
+</code></pre></div>
+<h1 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h1><div class="hljs code-wrapper"><pre><code class="hljs">   v-bind是单向绑定，将数据从data绑定到页面标签属性
+   v-model是双向绑定，将数据双向绑定。
+   v-model只能用于表单类元素中（输入类
+   
+
+   v-bind简写为   :value=&quot;&quot;   ,v-model:value=&quot;&quot;可以简写为v-model=&quot;&quot;
+</code></pre></div>
+<h1 id="el与data的两种写法"><a href="#el与data的两种写法" class="headerlink" title="el与data的两种写法"></a>el与data的两种写法</h1><div class="hljs code-wrapper"><pre><code class="hljs">#el写法
+   第一种：
+   new Vue(&#123;
+        el:&quot;#root&quot;
+        data:&#123;
+           name:&quot;何治兴&quot;
+        &#125;
+    &#125;)
+   第二种： 
+      const v=new Vue(&#123;
+        data:&#123;
+           name:&quot;何治兴&quot;
+        &#125;
+    &#125;)
+    v.$mount(&quot;#root&quot;);//mount有挂载的意思
+</code></pre></div>
+<p>   #data写法,用组件时，要函数式<br>       第一种对象式：<br>         new Vue({<br>            el:”#root”<br>            data:{<br>               name:”何治兴”<br>            }<br>        })<br>       第二种函数式：不能使用箭头函数，如果使用箭头函数，this就不是vue实例<br>        new Vue({<br>            el:”#root”<br>            data:function(){<br>              return{<br>                 name:”何治兴”<br>              }<br>            }<br>        })</p>
+<h1 id="理解MVVM"><a href="#理解MVVM" class="headerlink" title="理解MVVM"></a>理解MVVM</h1><p>  #MVVM<br>    M为模型（对应data中的数据），V代表VIEW（页面模板），VM为视图模型(代表vue实例对象)</p>
+<div class="hljs code-wrapper"><pre><code class="hljs">data数据中的属性，最后都出现在了vm身上
+vm身上的属性及vue原型上的所有属性，在vue模板上都可以直接使用。
+ 
+可以把vm（vue实例）理解为逻辑层，data理解为数据层，v理解为视图层
+</code></pre></div>
+<h1 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h1><div class="hljs code-wrapper"><pre><code class="hljs">使用Object.defineProperty()添加的属性不能被枚举（遍历），删除，修改
+
+
+Object.defineProperty()方法会传递三个参数，第一个参数是需要增加属性的对象，第二个参数是属性名，三个参数是
+自定义对象&#123;value：//属性的值
+          enumerable：//是否可遍历
+          writable：//是否可修改
+          configurable：//是否可修改
+          get（）&#123;&#125;     //getter
+          set（)&#123;&#125;      //setter
+          &#125;
+</code></pre></div>
+<h1 id="数据代理"><a href="#数据代理" class="headerlink" title="数据代理"></a>数据代理</h1><div class="hljs code-wrapper"><pre><code class="hljs">通过一个对象代理另外一个对象数据的读写
+</code></pre></div>
+<h1 id="vue中的数据代理"><a href="#vue中的数据代理" class="headerlink" title="vue中的数据代理"></a>vue中的数据代理</h1><div class="hljs code-wrapper"><pre><code class="hljs">  -创建好一个vue实例之后，vm实例将会去获取data数据，将其保存在_data中，为了书写简单
+    vue就做了数据代理，通过vm对象来代理data对象属性的操作
+   
+
+  -基本原理：通过Object.defineProperty()方法将data对象中的使用属性添加到vm上，
+            为每一个添加到vm上的属性，都指定一个getter和setter
+            在getter和setter内部去操作data对应属性
+</code></pre></div>
+<h1 id="事件的使用"><a href="#事件的使用" class="headerlink" title="事件的使用"></a>事件的使用</h1><div class="hljs code-wrapper"><pre><code class="hljs">  1、使用v-on：xxx或者@xxx来绑定事件，其中xxx是事件名，如@click
+  2、事件的回调需要配置到methods对象中，最终会在vm上
+  3、methods中配置的函数，不要用箭头函数，否则this就不是指向vm
+  4、methods中配置的函数，都是被vue管理的函数，this的指向就是vm或者组件化对象
+  5、@click=&quot;demo&quot;与@click=&quot;demo($event)&quot;效果一致，后者可以传参
+</code></pre></div>
+<h1 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h1><div class="hljs code-wrapper"><pre><code class="hljs">   用法@click.xxx=&quot;&quot;,xxx就是修饰符
+ 1、prevent:阻止默认事件，比如阻止超链接的跳转 ，@click.prevent=&quot;&quot;,
+     在js基础中的DOM 操作是e.preventDefault()
+ 2、stop:阻止冒泡，@click.stop=&quot;&quot;（在外层添加）
+     在js基础中，捕获是从外向内，冒泡是从内向外，并且是先不捕获，后冒泡
+ 3、once:只触发一次
+ 4、capture：使用事件的捕获模式，就是说先将捕获的事件处理，不会按照冒泡顺序处理
+ 5、self：只有是当前的DOM元素才会触发，比如在外层添加这个修饰符，那么点击里面这个，不会触发外面这个事件
+ 6、passive：将事件的默认行为立即执行，不会等待回调函数执行完毕
+</code></pre></div>
+<h1 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h1><div class="hljs code-wrapper"><pre><code class="hljs">  -键盘事件有keyup,keydown,keypress
+  -键盘事件的属性和方法keyCode	该属性包含键盘中对应键位的键值
+                  charCode	该属性包含键盘中对应键位的 Unicode 编码，仅 DOM 支持
+                  target	发生事件的节点（包含元素），仅 DOM 支持
+                  srcElement	发生事件的元素，仅 IE 支持
+                  shiftKey	是否按下 Shift 键，如果按下返回 true，否则为false
+                  ctrlKey	是否按下 Ctrl 键，如果按下返回 true，否则为false
+                  altKey	是否按下 Alt 键，如果按下返回 true，否则为false
+                  metaKey	是否按下 Mtea 键，如果按下返回 true，否则为false，仅 DOM 支持
+  -键盘别名
+        回车enter
+        上下左右：up,down,left,right
+        空格：space
+        换行：tab
+        注意有的键盘别名在不同键盘事件使用方法不同，注意查看文档
+</code></pre></div>
+<h1 id="事件总结"><a href="#事件总结" class="headerlink" title="事件总结"></a>事件总结</h1><div class="hljs code-wrapper"><pre><code class="hljs">     修饰符可以连续写，比如@click.stop.prevent 先阻止冒泡，再阻止默认事件
+</code></pre></div>
+<h1 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h1><div class="hljs code-wrapper"><pre><code class="hljs">  computed
+     1、定义：要用的属性不存在，要通过已有属性计算得来
+     2、原理：底层借助Object.defineProperty方法提供的getter和setter
+     3、在vue实例中要写在computed中
+     4、get函数什么时候会执行？
+           (1)当初次读取之时会执行一次，以后会调用缓存
+           （2）当依赖数据发生改变时，会再次被调用
+     5、优势：与methods实现相比，内部有缓存机制（复用），效率更高，调试更方便
+     6、备注：
+            1、计算属性会直接到vue实例中，直接读取即可
+            2、如果计算属性要被修改，必须写set函数去响应，且set呀要引起依赖数据的变化
+</code></pre></div>
+<h1 id="事件监视"><a href="#事件监视" class="headerlink" title="事件监视"></a>事件监视</h1><div class="hljs code-wrapper"><pre><code class="hljs">    监视属性wantch
+       1、当监视的属性发生变化时，回调函数会立即调用，进行相关操作
+       2、监听的属性必须存在，才能进行监视
+       3、监视的两种写法   
+          （1）写在vue实例中，传入watch配置
+          （2）通过vm.$watch(监视属性，监视执行语句)
+</code></pre></div>
+<h1 id="深度监视"><a href="#深度监视" class="headerlink" title="深度监视"></a>深度监视</h1><div class="hljs code-wrapper"><pre><code class="hljs">   （1）vue中的watch默认不检测内部属性值的改变（一层）
+   （2）配置deep：true可以检测到对象内部值的改变（多层）
+   （3）vue自身可以检测对象内部值的改变，但vue提供的watch默认不可以
+   （4）使用watch时根据数据的具体结构，决定是否采用是否采用深度监视
+</code></pre></div>
+<h1 id="计算属性与监视属性的区别"><a href="#计算属性与监视属性的区别" class="headerlink" title="计算属性与监视属性的区别"></a>计算属性与监视属性的区别</h1><div class="hljs code-wrapper"><pre><code class="hljs">    computed和watch之间的区别：
+          1、computed能完成的功能，watch都可以完成
+          2、watch能完成的功能，computed不一定能完成，例如：watch可以进行异步操作
+    两个重要的小原则：
+          1、所有被vue管理的函数，最好写成普通函数，这样this的指向才是vm或组件化实例对象
+          2、所有不被vue所管理的函数（定时器的回调函数，ajax的回调函数，promise的回调函数）。最好写成箭头函数
+             这样this的指向才是vm或组件化对象
+</code></pre></div>
+<h1 id="样式绑定"><a href="#样式绑定" class="headerlink" title="样式绑定"></a>样式绑定</h1><div class="hljs code-wrapper"><pre><code class="hljs">     1、class样式
+          写法   :class=&quot;xxx&quot;,xxx可以是字符串，对象，数组
+                字符串写法，适用于类名不确定，要动态获取
+                数组的写法，适用于要绑定多个样式，但个数不确定，名字也不确定
+                对象的写法，适用于要绑定多个样式，但个数去掉，名字确定，但不知道用不用
+    2、style样式
+          :style=&quot;&#123;fontSize:xxx&#125;&quot;,其中xxx是动态的
+          :style=&quot;[a,b]&quot;,其中a，b是样式对象
+</code></pre></div>
+<h1 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h1><div class="hljs code-wrapper"><pre><code class="hljs">    条件渲染有两个指令
+     1、v-show：
+           写法v-show:=&quot;表达式&quot;
+           适用于切换频率较高的场景
+           特点：不展示的DOM元素未被移出，仅仅是使用样式消失
+     2、v-if：
+           写法：
+              v-if=&quot;表达式&quot;
+              v-esle-if=&quot;表达式&quot;
+              v-else=&quot;表达式”
+           适用于切换频率较低的场景
+           特点：不展示的DOM元素直接被移出
+           注意：v-if可以和v-else-if、v-else一起使用，但要求结果不能被打断。
+</code></pre></div>
+<h1 id="列表渲染"><a href="#列表渲染" class="headerlink" title="列表渲染"></a>列表渲染</h1><div class="hljs code-wrapper"><pre><code class="hljs">     v-for指令：
+           1、用于展示列表数据
+           2、语法v-for=&quot;(item,index) in xxx&quot; :key=&quot;xxx&quot;
+           3、可遍历：数组、对象、字符串、指定次数
+</code></pre></div>
+<h1 id="面试题react、vue中的key有什么作用"><a href="#面试题react、vue中的key有什么作用" class="headerlink" title="面试题react、vue中的key有什么作用"></a>面试题react、vue中的key有什么作用</h1><h1 id="key的内部原理"><a href="#key的内部原理" class="headerlink" title="key的内部原理"></a>key的内部原理</h1><div class="hljs code-wrapper"><pre><code class="hljs">     1、虚拟DOM中key的作用：
+            key是虚拟DOM的数据标识，当数据发生改变时，vue会根据新数据生成新的虚拟DOM
+            随着vue进行新虚拟DOM与旧的虚拟DOM的差异比较，比较规则如下:(使用diff算法比较）
+     2、对比规则：
+           （1）旧的虚拟DOM中找到了与新的虚拟DOM相同的key：
+                 若虚拟DOM中的内容没变，直接使用之前的真实DOM
+                 若虚拟DOM中内容改变了，则生成新的真实DOM，随后替换掉页面中之前真实DOM
+           （2)旧的虚拟DOM未找到与新虚拟DOM相同的key
+                 创建真实的DOM，随后渲染到页面上
+     3、用index作为key可能引发的问题：
+            1、用数据进行：逆序添加、逆序删除等破坏顺序的操作
+                 会产生没有必要的真实DOM更新，===》页面效果没问题，但效率低
+            2、如果结构中包含输入类的DOM：
+                    会产生DOM的错误更新===》界面有问题
+
+     4、在开发中如何选择key
+             1、最好选择每条数据的唯一标识，比如id、电话号、身份证号等
+             2、如果不存在逆序添加、逆序删除、选择index也是没问题的
+</code></pre></div>
+<h1 id="vue检测数据更新总结"><a href="#vue检测数据更新总结" class="headerlink" title="vue检测数据更新总结"></a>vue检测数据更新总结</h1><div class="hljs code-wrapper"><pre><code class="hljs">  1、vue会监视data中所有层次的数据
+  2、如何检测对象中的数据？
+       通过setter来实现监视，且要在new Vue时就要传入要检测的数据：
+        （1）.对象中后追加的属性，Vue默认不做响应式处理
+        （2）如需给后续添加的属性做响应式，请使用如下API：
+                Vue.set(target,&#39;property&#39;,&#39;value&#39;)
+               或者vm.$set(target,&#39;property&#39;,&#39;value&#39;)
+  3、如何检测数组中的数据
+        通过包裹数组更新元素的方法实现，本质就是做了两件事：
+          （1）调用原生方法对数组进行更新
+          （2）重新解析模板，进而更新页面
+  4、Vue中修改数组中的某个元素一定要用如下方法：
+         1、使用这些API：push(),pop(),shift(),unshift(),splice(),reverse(),sort()
+         2、Vue.set()或者vm.$set()
+
+   特别注意：Vue.set与vm.$set不能给vm或者vm的根数据添加属性（如data） 
+</code></pre></div>
+<h1 id="数据劫持"><a href="#数据劫持" class="headerlink" title="数据劫持"></a>数据劫持</h1><div class="hljs code-wrapper"><pre><code class="hljs">    为data添加getter与setter，对data加工，重新解析模板 
+</code></pre></div>
+<h1 id="收集表单数据"><a href="#收集表单数据" class="headerlink" title="收集表单数据"></a>收集表单数据</h1><div class="hljs code-wrapper"><pre><code class="hljs">   若：&lt;input type=&quot;text&quot;&gt; :则v-model收集的是value值，用户输入的就是value值
+   若：&lt;input type=&quot;radio&quot;&gt;:则v-model收集的是value值，但是要给标签配置value值
+   若：&lt;input type=&quot;checkbox&quot;&gt;:
+        1、没有配置value值，v-model收集的就是checked（勾选 or 不勾选 是一个布尔值—）
+        2、配置了value值  
+             但是value值为非数组，v-model收集的还是checked（勾选 or 不勾选 是一个布尔值—）
+             value为数组类型，v-model收集的就是value组成的数组
+   备注：v-model有三个修饰符
+          lazy：失去焦点在获取
+          number：输入字符串转化为有效数字
+          trim：输入首位空格过滤  
+</code></pre></div>
+<h1 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h1><div class="hljs code-wrapper"><pre><code class="hljs">   定义：对要显示的数据进行特定的格式化后在显示（适用于一些简单的逻辑处理）
+   语法： 
+        1、注册过滤器：Vue.filter(name,callback)或者new Vue（filters:&#123;&#125;)
+        2、使用过滤器：&#123;&#123;xxx | 过滤器名&#125;&#125;或者v-bind：属性=&quot;xxx |过滤器名&quot;
+   备注：
+        1、概率器也可以接收额外 参数、多个过滤器也可以串联
+        2、并没有改变原本的数据，是产生新的对应数据  
+</code></pre></div>
+<h1 id="截至目前我们学过的指令"><a href="#截至目前我们学过的指令" class="headerlink" title="截至目前我们学过的指令"></a>截至目前我们学过的指令</h1><div class="hljs code-wrapper"><pre><code class="hljs">    v-bind：单向绑定解析表达式，可简写为 :xxx    xxx是属性名
+    v-model：双向绑定数据
+    v-for：遍历数组/对象/字符串
+    v-on:绑定事件监听
+    v-if：条件渲染（动态控制节点是否存在）
+    v-show：条件渲染
+    v-else：条件渲染
+</code></pre></div>
+<h1 id="其他内置指令"><a href="#其他内置指令" class="headerlink" title="其他内置指令"></a>其他内置指令</h1><div class="hljs code-wrapper"><pre><code class="hljs">    v-text指令：
+        1、作用：向其所在的节点渲染文本内容
+        2、与插值语法的区别：v-text会替换掉节点的内容，&#123;&#123;xx&#125;&#125;则不会
+    v-html指令：
+         1、作用：向指定的节点渲染包含html结构的内容
+         2、与插值语法的区别：
+             （1）v-html会替换掉节点中的所有内容，&#123;&#123;xx&#125;&#125;则不会
+             （2）v-html可以识别html结构
+         3、严重注意：v-html有安全性问题
+              （1）在网站中动态渲染任意html是非常危险的，容易导致xxs攻击
+              （2）一定要在可信的内容使用v-html，永远不要用在用户提交的内容上
+    v-cloak指令：
+          1、本质上是一个特殊的属性，Vue实例创建完毕之后接管容器，会删掉v-clock属性
+          2、使用css配合v-cloak可以解决网速较慢时页面展示不出来&#123;&#123;xxx&#125;&#125;的问题
+    v-once指令：
+          1、v-once所在节点在第一次动态渲染，就视为静态内容了
+          2、以后的数据更新改变就不会引起v-once所在结构的更新，可以用于性能优化
+    v-pre指令：
+          1、跳过其所在节点的编译过程
+          2、可利用它跳过：没有指令语法、没有插值语法的节点，会加快编译
+</code></pre></div>
+<h1 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h1><div class="hljs code-wrapper"><pre><code class="hljs">     局部指令定义语法：
+         new Vue(&#123;                                      new Vue(&#123;
+            directives:&#123;指令名：指令对象&#125;     或者            directives:&#123;指令名：回调函数&#125;
+          &#125;）                                            &#125;）
+     
+
+     全局指令定义语法：
+         Vue.driective(指令名，回调函数）
+
+     二、配置对象常用的三个回调函数
+         （1）bind:指令与元素成功绑定时调用
+         （2）inserted：指令所在元素被插入页面时调用
+         （3）update：指令所在模板结构被重新调用
+     三、备注：
+         1、指令定义时不加v-，在使用时加v-
+         2、指令名如果是多个单词时，使用kebab-case类型定义，而不用cameLcase这种类型定义
+</code></pre></div>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><div class="hljs code-wrapper"><pre><code class="hljs">   生命周期：
+      1、又名，生命周期回调函数、生命周期函数、生命周期钩子
+      2、是什么：Vue在关键时刻帮我们调用的一些特殊名称的函数
+      3、生命周期函数的名字不可更改，但函数的具体内容是程序员根据需求编写的
+      4、生命周期函数中的this指向的是vm实例对象或者组件化实例对象
+</code></pre></div>
+<h1 id="生命周期函数钩子"><a href="#生命周期函数钩子" class="headerlink" title="生命周期函数钩子"></a>生命周期函数钩子</h1><div class="hljs code-wrapper"><pre><code class="hljs">   常用的生命函数钩子有： 
+       1、mounted：发送AJAX请求、启动定时器、绑定自定义事件、订阅消息等初始化操作
+       2、beforedestroy：清除定时器、解绑自定义事件、取消订阅事件等收尾工作
+  关于销毁Vue实例
+       1、销毁后要借助Vue开发者工具看不到任何信息
+       2、销毁后的自定义事件会失效，但原生DOM依旧有效
+       3、一般不会在beforedestroy操作数据，因为即使操作数据，也不会触发更新数据。
+    
+</code></pre></div>
+<h1 id="组件的概念"><a href="#组件的概念" class="headerlink" title="组件的概念"></a>组件的概念</h1><div class="hljs code-wrapper"><pre><code class="hljs">   实现应用中局部功能的代码和资源的集合
+</code></pre></div>
+<h1 id="组件的使用"><a href="#组件的使用" class="headerlink" title="组件的使用"></a>组件的使用</h1><div class="hljs code-wrapper"><pre><code class="hljs">  Vue使用组件的三大步骤：
+       1、定义组件（创建组件）
+       2、注册组件
+       3、使用组件（写组件标签）
+  一、如何定义一个组件？
+       使用Vue.extend(options)创建，其中options和new Vue(options)传入那个options几乎一致，但也有区别
+            1、el不要写，--因为组件最终都要受到vm的管理，由vm中的el决定服务那个容器
+            2、data必须写成函数，----因为组件被复用时，数据存在引用关系。
+        备注：使用template可以配置组件结构
+
+   二、如何注册组件？
+        1、局部注册：靠new Vue的时候传入components选项
+        2、全局注册：Vue.component(&quot;组件名&quot;,组件）
+   三、编写组件标签？
+        例如：&lt;school&gt;&lt;/school&gt;
+</code></pre></div>
+<h1 id="组件注意项"><a href="#组件注意项" class="headerlink" title="组件注意项"></a>组件注意项</h1><div class="hljs code-wrapper"><pre><code class="hljs">    1、关于组件名
+           如果时一个单词组成的话：
+               第一种写法（首字母小写）:school
+               第二种写法（首字母大写）：School
+           如果是多个单词组成：
+               第一种写法：my-school
+               第二种写法：MySchool（但是这种方法需要脚手架）
+           备注：
+             1、组件名要回避HTML中的标签名，如h2，button
+             2、可以在组件中使用name属性配置组件在开发者工具中的名字
+   2、关于组件标签
+          1、第一种写法：&lt;school&gt;&lt;/school&gt;
+          2、第二种写法：&lt;/school&gt;(但是这种不使用脚手架时，会导致此标签后续无法渲染
+   3、定义组件简写方式
+         const school=Vue.extend(options)  可简写为：const school=options 
+         简写的原理是在注册组件时，Vue源码会进行判断，传入的对象，如果没有使用Vue.extend,就会帮程序员调用
+</code></pre></div>
+<h1 id="关于VueComponent的五个点"><a href="#关于VueComponent的五个点" class="headerlink" title="关于VueComponent的五个点"></a>关于VueComponent的五个点</h1><div class="hljs code-wrapper"><pre><code class="hljs">   1、组件实质上是一个名为VueComponent的构造函数，并且不是由我们定义的，而是由Vue.extend()方法返回的（生成）
+   2、我们只需写&lt;school&gt;&lt;/school&gt;,Vue就会帮我们生成一个VueComponent实例对象，即Vue帮我们执行new VueComponent(options)
+   3、特别注意：每次调用Vue.extend,返回的都是一个全新的VueComponent
+   4、关于this的指向问题：
+           （1）组件配置中：
+                  data中的函数、methods中的函数、watch中的函数、computed中的函数，他们的this均是【VueComponent实例对象】
+           （2）new Vue（options）配置中：
+                  data中的函数、methods中的函数、watch中的函数、computed中的函数，他们的this均是【Vue实例对象】
+   5、VueComponent的实例对象，以后简称vc，（也可称之为组件实例对象）
+         Vue实例对象简称为vm
+</code></pre></div>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/vue/">vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/vue%E5%9F%BA%E7%A1%80/">vue基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/vue2/">vue2</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，如需转载" rel="nofollow noopener">，请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">javascript</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/10/%E4%BB%A3%E7%A0%81%E5%9D%97/%E6%BC%94%E7%A4%BA/">
+                        <span class="hidden-mobile">代码演示如果想手动将某些文章固定在首页靠前的位置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81NjM4My8zMjg0Ng==">
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#lv-container', function() {
+        Fluid.utils.createScript('https://cdn-city.livere.com/js/embed.dist.js');
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://cdn.jsdelivr.net/gh/hzx17/picgodemo/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <div>很高兴认识你！<i class="iconfont icon-love"></i>  我叫何十七，一个技术爱好者</div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        京ICP证123456号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>京公网安备12345678号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
