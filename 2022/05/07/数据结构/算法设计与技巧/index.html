@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="http://rcj536al9.hn-bkt.clouddn.com/img2.jpg">
+  <link rel="icon" href="http://imghe.xyz/img2.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,24 +16,25 @@
   <meta name="author" content="何十七">
   <meta name="keywords" content="it博客">
   
-    <meta name="description" content="队列是一种特殊的线性表，进行插入操作的端称为队尾，进行删除操作的端称为队头。其特点是先进先出。">
+    <meta name="description" content="算法设计技巧是一个很广阔的话题，在我刷题过程中，我会尽量在这篇博客中更新">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript数据结构-队列">
-<meta property="og:url" content="https://hzx17.github.io/2022/05/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="算法设计与技巧">
+<meta property="og:url" content="https://hzx17.github.io/2022/05/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="blog-he">
-<meta property="og:description" content="队列是一种特殊的线性表，进行插入操作的端称为队尾，进行删除操作的端称为队头。其特点是先进先出。">
+<meta property="og:description" content="算法设计技巧是一个很广阔的话题，在我刷题过程中，我会尽量在这篇博客中更新">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://rcj536al9.hn-bkt.clouddn.com/img/队列.jpg">
-<meta property="article:published_time" content="2022-05-12T14:33:27.000Z">
-<meta property="article:modified_time" content="2022-06-08T09:03:26.714Z">
+<meta property="og:image" content="http://imghe.xyz/img/数据结构2.jpg">
+<meta property="article:published_time" content="2022-05-07T14:33:27.000Z">
+<meta property="article:modified_time" content="2022-06-30T05:26:52.452Z">
 <meta property="article:author" content="何十七">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法设计与技巧">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://rcj536al9.hn-bkt.clouddn.com/img/队列.jpg">
+<meta name="twitter:image" content="http://imghe.xyz/img/数据结构2.jpg">
   
   
-  <title>javascript数据结构-队列 - blog-he</title>
+  <title>算法设计与技巧 - blog-he</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -220,12 +221,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('http://rcj536al9.hn-bkt.clouddn.com/img/backgroud.jpg') no-repeat center center;
+         style="background: url('http://imghe.xyz/img/javascript.webp') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="javascript数据结构-队列">
+            <span class="h2" id="subtitle" title="算法设计与技巧">
               
             </span>
 
@@ -240,8 +241,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-05-12 22:33" pubdate>
-        2022年5月12日 晚上
+      <time datetime="2022-05-07 22:33" pubdate>
+        2022年5月7日 晚上
       </time>
     </span>
   
@@ -251,7 +252,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      72 字
     </span>
   
 
@@ -260,7 +261,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11 分钟
+      1 分钟
     </span>
   
 
@@ -289,16 +290,24 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">javascript数据结构-队列</h1>
+            <h1 style="display: none">算法设计与技巧</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：10 天前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">/* 封装优先级队列 */</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">PriorityQueue</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-comment">//保存元素和优先级</span><br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">QueueElement</span>(<span class="hljs-params">element,priority</span>)&#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">element</span>=element;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">priority</span>=priority;<br>    &#125;<br>    <span class="hljs-comment">//封装属性</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>=[];<br>    <span class="hljs-comment">//封装方法</span><br>    <span class="hljs-comment">//实现插入方法</span><br>    <span class="hljs-title class_">PriorityQueue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">enqueue</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params">element,priority</span>)&#123;<br>        <span class="hljs-comment">// 1、创建QueueElement对象</span><br>        <span class="hljs-keyword">const</span> queueElement=<span class="hljs-keyword">new</span> <span class="hljs-title class_">QueueElement</span>(element,priority);<br>        <span class="hljs-comment">//2、判断队列是否为空</span><br>        <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-property">length</span>==<span class="hljs-number">0</span>)&#123;<br>           <span class="hljs-comment">//直接将实例化的元素与优先级对象push进来</span><br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">push</span>(queueElement)<br><br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-comment">//3、for循环遍历比较队列中已有元素的优先级 </span><br>            <span class="hljs-keyword">var</span> added=<span class="hljs-literal">false</span>; <br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-property">length</span>;i++)&#123;<br>                <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[i].<span class="hljs-property">priority</span>&gt;queueElement.<span class="hljs-property">priority</span>)&#123;<br>                    <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">splice</span>(i,<span class="hljs-number">0</span>,queueElement);<br>                    added=<span class="hljs-literal">true</span>;<br>                    <span class="hljs-keyword">break</span>;  <br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(!added)&#123;<br>                <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">push</span>(queueElement)<br>            &#125;<br>        &#125;<br>    &#125;<br>      <span class="hljs-comment">//toString</span><br>    <span class="hljs-title class_">PriorityQueue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">toString</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-keyword">let</span> resultString=<span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-property">length</span>;i++)&#123;<br>             resultString +=<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[i]+<span class="hljs-string">&quot;&quot;</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> resultString<br>    &#125;<br><br>&#125;<br><span class="hljs-comment">//实例化类</span><br><span class="hljs-keyword">var</span> priorityQueue=<span class="hljs-keyword">new</span> <span class="hljs-title class_">PriorityQueue</span>();<br><br><span class="hljs-comment">//向其添加元素</span><br>priorityQueue.<span class="hljs-title function_">enqueue</span>(<span class="hljs-string">&quot;何治兴&quot;</span>,<span class="hljs-number">153</span>);<br>priorityQueue.<span class="hljs-title function_">enqueue</span>(<span class="hljs-string">&quot;李玉成&quot;</span>,<span class="hljs-number">323</span>);<br>priorityQueue.<span class="hljs-title function_">enqueue</span>(<span class="hljs-string">&quot;李阳&quot;</span>,<span class="hljs-number">223</span>);<br>priorityQueue.<span class="hljs-title function_">enqueue</span>(<span class="hljs-string">&quot;zhangsan&quot;</span>,<span class="hljs-number">310</span>);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(priorityQueue)<br></code></pre></div></td></tr></table></figure>
+              <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>算法设计技巧是一个很广阔的话题，在我刷题过程中，我会尽量在这篇博客中更新</p>
+<h1 id="常见的算法设计技巧"><a href="#常见的算法设计技巧" class="headerlink" title="常见的算法设计技巧"></a>常见的算法设计技巧</h1><ul>
+<li>分而治之</li>
+<li>贪心算法</li>
+<li>动态规划</li>
+<li>回溯算法</li>
+<li>还有一些函数式编程</li>
+</ul>
+
             </div>
             <hr>
             <div>
@@ -319,6 +328,8 @@
                     
                       <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
                     
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%8A%80%E5%B7%A7/">算法设计与技巧</a>
+                    
                   </div>
                 
               </div>
@@ -334,9 +345,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/12/vue/vue2%E8%84%9A%E6%89%8B%E6%9E%B6/">
+                      <a href="/2022/05/11/vue/vue2%E5%9F%BA%E7%A1%80/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">vue2脚手架</span>
+                        <span class="hidden-mobile">vue2基础知识</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -344,8 +355,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/11/vue/vue2%E5%9F%BA%E7%A1%80/">
-                        <span class="hidden-mobile">vue2基础知识</span>
+                      <a href="/2022/01/14/javascript/regExp/">
+                        <span class="hidden-mobile">正则表达式</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -394,7 +405,7 @@
 
   <div class="col-lg-7 mx-auto nopadding-x-md">
     <div class="container custom post-custom mx-auto">
-      <img src="http://rcj536al9.hn-bkt.clouddn.com/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
+      <img src="http://imghe.xyz/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
     </div>
   </div>
 
