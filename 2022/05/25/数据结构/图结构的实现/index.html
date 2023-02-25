@@ -1,0 +1,799 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="http://imghe.xyz/img2.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="rgba(37, 45, 56, 0.4)">
+  <meta name="author" content="何十七">
+  <meta name="keywords" content="it博客">
+  
+    <meta name="description" content="图也是一种非常常见的数据结构, 我们知道树可以用来模拟很多现实的数据结构，比如：家谱&#x2F;公司组织架构等等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript数据结构-图">
+<meta property="og:url" content="https://hzx17.github.io/2022/05/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE%E7%BB%93%E6%9E%84%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="blog-he">
+<meta property="og:description" content="图也是一种非常常见的数据结构, 我们知道树可以用来模拟很多现实的数据结构，比如：家谱&#x2F;公司组织架构等等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imghe.xyz/数据结构/人之间的关系网.png">
+<meta property="article:published_time" content="2022-05-25T14:33:27.000Z">
+<meta property="article:modified_time" content="2022-06-30T04:00:14.928Z">
+<meta property="article:author" content="何十七">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="图">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imghe.xyz/数据结构/人之间的关系网.png">
+  
+  
+  <title>javascript数据结构-图 - blog-he</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/night-owl.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/cursor.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/scollbar.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"hzx17.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                博客
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/photos/">
+                <i class="iconfont icon-instagram-fill"></i>
+                相册
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/message/">
+                <i class="iconfont icon-archive-fill"></i>
+                留言板
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('http://imghe.xyz/img/javascript.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="javascript数据结构-图">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      何十七
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-25 22:33" pubdate>
+        2022年5月25日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      52 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">javascript数据结构-图</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p class="note note-warning">本博客参考于洛伊安妮·格罗纳编著的javascript数据结构与算法第三版及codeWay老师视频或其他博客资料，在此对此表示感谢!
+<br>
+github仓库：<a target="_blank" rel="noopener" href="https://github.com/hzx17/DataStructures" style="color:#428bca;">https://github.com/hzx17/</a><p>
+
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h3 id="图的概念"><a href="#图的概念" class="headerlink" title="图的概念"></a>图的概念</h3><p>在计算机程序设计中，图也是一种非常常见的数据结构，图论其实是一个非常大的话题，在数学上起源于哥尼斯堡七桥问题。</p>
+<h3 id="什么是图？"><a href="#什么是图？" class="headerlink" title="什么是图？"></a>什么是图？</h3><ul>
+<li><p>图是一种与树有些相似的数据结构。</p>
+<ul>
+<li>实际上，在数学的概念上，树是图的一种。</li>
+<li>我们知道树可以用来模拟很多现实的数据结构，比如：家谱&#x2F;公司组织架构等等。</li>
+</ul>
+</li>
+<li><p>那么图长什么样子呢？或者什么样的数据使用图来模拟更合适呢？</p>
+<ul>
+<li><p>人与人之间的关系网<br><img src="http://imghe.xyz/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E7%BD%91.png" srcset="/img/loading.gif" lazyload alt="人与人之间的关系网"></p>
+</li>
+<li><p>互联网中的网络关系<br><img src="http://imghe.xyz/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png" srcset="/img/loading.gif" lazyload alt="互联网中的网络关系"></p>
+</li>
+<li><p>地铁图</p>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+</li>
+<li><p>那么，什么是图呢?</p>
+<ul>
+<li>我们会发现，上面的结点（其实图中叫顶点 Vertex）之间的关系，是不能使用树来表示（几叉树都不可以）。</li>
+<li>这个时候，我们就可以使用<strong>图</strong>来模拟它们。</li>
+</ul>
+</li>
+<li><p>图通常有什么特点呢？</p>
+<ul>
+<li>一组顶点：通常用 V (Vertex) 表示顶点的集合</li>
+<li>一组边：通常用 E (Edge) 表示边的集合</li>
+<li>边是顶点和顶点之间的连线</li>
+<li>边可以是有向的，也可以是无向的。（比如 A — B，通常表示无向。 A –&gt; B，通常表示有向）</li>
+</ul>
+</li>
+</ul>
+<h3 id="图的术语"><a href="#图的术语" class="headerlink" title="图的术语"></a>图的术语</h3><h4 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h4><ul>
+<li><p>我们在学习树的时候，树有很多的其他术语，了解这些术语有助于我们更深层次的理解图。</p>
+</li>
+<li><p>但是图的术语其实非常多，如果你找一本专门讲图的各个方面的书籍，会发现只是术语就可以占据一个章节。</p>
+</li>
+<li><p>这里，这里介绍几个比较常见的术语，某些术语后面用到的时候，再了解，没有用到的，不做赘述。</p>
+</li>
+<li><p>下面这是个抽象出来的图<br><img src="http://imghe.xyz/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE%E7%9A%84%E6%8A%BD%E8%B1%A1.png" srcset="/img/loading.gif" lazyload alt="抽象图"></p>
+</li>
+<li><p>顶点</p>
+<ul>
+<li>顶点刚才我们已经介绍过了，表示图中的一个结点。</li>
+<li>比如地铁站中某个站&#x2F;多个村庄中的某个村庄&#x2F;互联网中的某台主机&#x2F;人际关系中的人。</li>
+</ul>
+</li>
+<li><p>边</p>
+<ul>
+<li>边表示顶点和顶点之间的连线。</li>
+<li>比如地铁站中两个站点之间的直接连线, 就是一个边。</li>
+<li>注意：这里的边不要叫做路径，路径有其他的概念，后面会区分。</li>
+</ul>
+</li>
+<li><p>相邻顶点</p>
+<ul>
+<li>由一条边连接在一起的顶点称为相邻顶点。</li>
+<li>比如 <code>0 - 1</code> 是相邻的，<code>0 - 3</code> 是相邻的。<code>0 - 2</code> 是不相邻的。</li>
+</ul>
+</li>
+<li><p>度</p>
+<ul>
+<li>一个顶点的度是相邻顶点的数量</li>
+<li>比如 0 顶点和其他两个顶点相连，0 顶点的度是 2</li>
+<li>比如 1 顶点和其他四个顶点相连，1 顶点的度是 4</li>
+</ul>
+</li>
+<li><p>路径</p>
+<ul>
+<li>路径是顶点 <code>v1</code>，<code>v2</code>…，<code>vn</code> 的一个连续序列, 比如上图中 <code>0 1 5 9</code> 就是一条路径。</li>
+<li>简单路径: 简单路径要求不包含重复的顶点. 比如 <code>0 1 5 9</code> 是一条简单路径。</li>
+<li>回路：第一个顶点和最后一个顶点相同的路径称为回路。比如 <code>0 1 5 6 3 0</code>。</li>
+</ul>
+</li>
+<li><p>无向图</p>
+<ul>
+<li>上面的图就是一张无向图，因为所有的边都没有方向。</li>
+<li>比如 <code>0 - 1</code> 之间有边，那么说明这条边可以保证 <code>0 -&gt; 1</code>，也可以保证 <code>1 -&gt; 0</code>。</li>
+</ul>
+</li>
+<li><p>有向图</p>
+<ul>
+<li>有向图表示的图中的边是有方向的。</li>
+<li>比如 <code>0 -&gt; 1</code>，不能保证一定可以 <code>1 -&gt; 0</code>，要根据方向来定。</li>
+</ul>
+</li>
+</ul>
+<h4 id="无权图和带权图"><a href="#无权图和带权图" class="headerlink" title="无权图和带权图"></a>无权图和带权图</h4><ul>
+<li><p>无权图</p>
+<ul>
+<li>我们上面的图就是一张无权图（边没有携带权重）</li>
+<li>我们上面的图中的边是没有任何意义的，不能收 <code>0 - 1</code> 的边，比 <code>4 - 9</code> 的边更远或者用的时间更长。</li>
+</ul>
+</li>
+<li><p>带权图</p>
+<ul>
+<li>带权图表示边有一定的权重</li>
+<li>这里的权重可以是任意你希望表示的数据：比如距离或者花费的时间或者票价。</li>
+<li>我们来看一张有向和带权的图<br><img src="http://imghe.xyz/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B8%A6%E6%9D%83%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="带权图"></li>
+</ul>
+</li>
+</ul>
+<h3 id="现实建模"><a href="#现实建模" class="headerlink" title="现实建模"></a>现实建模</h3><ul>
+<li><p>对交通流量建模</p>
+<ul>
+<li>顶点可以表示街道的十字路口，边可以表示街道.。</li>
+<li>加权的边可以表示限速或者车道的数量或者街道的距离。</li>
+<li>建模人员可以用这个系统来判定最佳路线以及最可能堵车的街道。</li>
+</ul>
+</li>
+<li><p>对飞机航线建模</p>
+<ul>
+<li>航空公司可以用图来为其飞行系统建模。</li>
+<li>将每个机场看成顶点，将经过两个顶点的每条航线看作一条边。</li>
+<li>加权的边可以表示从一个机场到另一个机场的航班成本，或两个机场间的距离。</li>
+<li>建模人员可以利用这个系统有效的判断从一个城市到另一个城市的最小航行成本。<br>​</li>
+</ul>
+</li>
+</ul>
+<h3 id="图的表示"><a href="#图的表示" class="headerlink" title="图的表示"></a>图的表示</h3><p>我们知道一个图包含很多顶点，另外包含顶点和顶点之间的连线（边），这两个都是非常重要的图信息，因此都需要在程序中体现出来。</p>
+<h4 id="顶点表示"><a href="#顶点表示" class="headerlink" title="顶点表示"></a>顶点表示</h4><ul>
+<li><p>顶点的表示相对简单</p>
+<ul>
+<li>上面的顶点，我们抽象成了 1 2 3 4，也可以抽象成 A B C D。在后面的案例中，我们使用 A B C D。</li>
+<li>那么这些 A B C D 我们可以使用一个数组来存储起来(存储所有的顶点)。</li>
+<li>当然，A B C D 有可能还表示其他含义的数据(比如村庄的名字)，这个时候，可以另外创建一个数组，用于存储对应的其他数据。</li>
+</ul>
+</li>
+<li><p>边的表示略微复杂</p>
+<ul>
+<li>因为边是两个顶点之间的关系，所以表示起来会稍微麻烦一些。</li>
+<li>下面是变常见的表示方式。</li>
+</ul>
+</li>
+</ul>
+<h4 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h4><ul>
+<li><p>概述</p>
+<ul>
+<li>邻接矩阵让每个节点和一个整数向关联, 该整数作为数组的下标值.</li>
+<li>我们用一个二维数组来表示顶点之间的连接.</li>
+<li>演示<br><img src="http://imghe.xyz/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5.png" srcset="/img/loading.gif" lazyload alt="邻接矩阵"></li>
+</ul>
+</li>
+<li><p>图片解析</p>
+<ul>
+<li>在二维数组中，0 表示没有连线，1 表示有连线。</li>
+<li>通过二维数组，我们可以很快的找到一个顶点和哪些顶点有连线。（比如 A 顶点, 只需要 遍历第一行即可）</li>
+<li>另外，A - A，B - B（也就是顶点到自己的连线），通常使用 0 表示。</li>
+</ul>
+</li>
+<li><p>邻接矩阵的问题</p>
+<ul>
+<li><p>如果是一个无向图，邻接矩阵展示出来的二维数组，其实是一个对称图。</p>
+<ul>
+<li>也就是 A -&gt; D 是 1 的时候，对称的位置 D -&gt; 1 一定也是 1。</li>
+<li>那么这种情况下会造成空间的浪费，解决办法需自己去研究下。</li>
+</ul>
+</li>
+<li><p>邻接矩阵还有一个比较严重的问题就是如果图是一个稀疏图</p>
+<ul>
+<li>那么矩阵中将存在大量的 0，这意味着我们浪费了计算机存储空间来表示根本不存在的边。</li>
+<li>而且即使只有一个边，我们也必须遍历一行来找出这个边，也浪费很多时间。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h4><ul>
+<li><p>概述</p>
+<ul>
+<li>邻接表由图中每个顶点以及和顶点相邻的顶点列表组成。</li>
+<li>这个列表有很多中方式来存储：数组&#x2F;链表&#x2F;字典(哈希表)都可以。</li>
+<li>演示<br><img src="http://imghe.xyz/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%82%BB%E6%8E%A5%E8%A1%A8.png" srcset="/img/loading.gif" lazyload alt="邻接表"></li>
+</ul>
+</li>
+<li><p>图片解析</p>
+<ul>
+<li>其实图片比较容易理解</li>
+<li>比如我们要表示和 A 顶点有关联的顶点（边），A 和 B&#x2F;C&#x2F;D 有边，那么我们可以通过 A 找到 对应的数组&#x2F;链表&#x2F;字典，再取出其中的内容就可以啦。</li>
+</ul>
+</li>
+<li><p>邻接表的问题</p>
+<ul>
+<li>邻接表计算“出度”是比较简单的（出度：指向别人的数量, 入度: 指向自己的数量）</li>
+<li>邻接表如果需要计算有向图的“入度”，那么是一件非常麻烦的事情。</li>
+<li>它必须构造一个“逆邻接表”，才能有效的计算“入度”。而临街矩阵会非常简单。</li>
+</ul>
+</li>
+</ul>
+<h3 id="图的封装"><a href="#图的封装" class="headerlink" title="图的封装"></a>图的封装</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"> <span class="hljs-comment">/* 封装队列类 */</span><br> <span class="hljs-keyword">function</span> <span class="hljs-title function_">Queue</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-comment">//属性</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>=[];<br>  <span class="hljs-comment">/* 方法 */</span><br>  <span class="hljs-comment">//将元素放入队列中</span><br>  <span class="hljs-title class_">Queue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">enqueue</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params">element</span>)&#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">push</span>(element)<br>  &#125;<br>  <span class="hljs-comment">//从队列中删除前端元素</span><br>  <span class="hljs-title class_">Queue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">dequeue</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">shift</span>();<br>&#125;<br>  <span class="hljs-comment">//从队列中查看前端元素</span><br>  <span class="hljs-title class_">Queue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">showqueue</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[<span class="hljs-number">0</span>]<br>&#125;<br><span class="hljs-comment">//从队列中删除任何位置元素</span><br><span class="hljs-title class_">Queue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">spliceelement</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params">index,count</span>)&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">splice</span>(index,count)<br>&#125;<br>  <span class="hljs-comment">//查看队列中元素个数是否为空</span><br>  <span class="hljs-title class_">Queue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">isEmpty</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-property">length</span>==<span class="hljs-number">0</span><br>&#125;<br>  <span class="hljs-comment">//查看队列中的元素个数</span><br>  <span class="hljs-title class_">Queue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">elementnum</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-property">length</span>;<br>  &#125;<br>  <span class="hljs-comment">//toString</span><br>  <span class="hljs-title class_">Queue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">toString</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">let</span> resultString=<span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-property">length</span>;i++)&#123;<br>        resultString +=<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[i]+<span class="hljs-string">&quot;&quot;</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> resultString<br>&#125;<br>&#125;<br><br><span class="hljs-comment">/* 封装图 */</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Graph</span> () &#123;<br>  <span class="hljs-comment">// 属性：顶点</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">vertexes</span> = [] <span class="hljs-comment">// 顶点</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">edges</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>() <span class="hljs-comment">// 边-字典类</span><br><br>  <span class="hljs-comment">// 往图中添加边</span><br>  <span class="hljs-title class_">Graph</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">addVertexes</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">v</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">vertexes</span>.<span class="hljs-title function_">push</span>(v)<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">edges</span>.<span class="hljs-title function_">set</span>(v,[])<br>  &#125;<br>  <span class="hljs-comment">// 往图中添加边</span><br>  <span class="hljs-title class_">Graph</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">addEdges</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">v1,v2</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">edges</span>.<span class="hljs-title function_">get</span>(v1).<span class="hljs-title function_">push</span>(v2)<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">edges</span>.<span class="hljs-title function_">get</span>(v2).<span class="hljs-title function_">push</span>(v1)<br>  &#125;<br>  <span class="hljs-comment">// 图结构的toString方法</span><br>  <span class="hljs-title class_">Graph</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">toString</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 定义一个字符串，保存最终的结果</span><br>    <span class="hljs-keyword">let</span> resultString = <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-comment">// 遍历边结构</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span> ; i&lt; <span class="hljs-variable language_">this</span>.<span class="hljs-property">vertexes</span>.<span class="hljs-property">length</span> ;i++) &#123;<br>      resultString += <span class="hljs-variable language_">this</span>.<span class="hljs-property">vertexes</span>[i] + <span class="hljs-string">&quot;-&gt;&quot;</span><br>      resultString += <span class="hljs-variable language_">this</span>.<span class="hljs-property">edges</span>.<span class="hljs-title function_">get</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">vertexes</span>[i]) + <span class="hljs-string">`\n`</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> resultString<br>  &#125;<br>  <span class="hljs-comment">// 初始化颜色</span><br>  <span class="hljs-title class_">Graph</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">initializeColor</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 定义颜色数组</span><br>    <span class="hljs-keyword">let</span> colors= [] <br>    <span class="hljs-keyword">for</span>( <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span> ;i&lt;<span class="hljs-variable language_">this</span>.<span class="hljs-property">vertexes</span>.<span class="hljs-property">length</span> ;i++) &#123;<br>      colors[<span class="hljs-variable language_">this</span>.<span class="hljs-property">vertexes</span>[i]] = <span class="hljs-string">&#x27;white&#x27;</span> <span class="hljs-comment">// 白色标识未处理</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> colors<br>  &#125;<br>  <span class="hljs-comment">//广度优先搜索遍历 - 队列实现</span><br>  <span class="hljs-title class_">Graph</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">breadthFirstSearch</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">initv,handler</span>) &#123;<br>    <span class="hljs-keyword">let</span> colors = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">initializeColor</span>() <span class="hljs-comment">// 初始化颜色</span><br>    <span class="hljs-comment">//创建一个队列</span><br>    <span class="hljs-keyword">const</span> queue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Queue</span>()<br>    <span class="hljs-comment">// 将顶点加入到队列中</span><br>    queue.<span class="hljs-title function_">enqueue</span>(initv)<br>    <span class="hljs-comment">// 循环取出队列</span><br>    <span class="hljs-keyword">while</span>(!queue.<span class="hljs-title function_">isEmpty</span>()) &#123;<br>      <span class="hljs-comment">// 取出顶点</span><br>      <span class="hljs-keyword">let</span> v= queue.<span class="hljs-title function_">dequeue</span>()<br>      <span class="hljs-comment">// 获取顶点与顶点相邻的其他顶点</span><br>      <span class="hljs-keyword">let</span> vlist = <span class="hljs-variable language_">this</span>.<span class="hljs-property">edges</span>.<span class="hljs-title function_">get</span>(v)<br>      colors[v] = <span class="hljs-string">&quot;gray&quot;</span> <span class="hljs-comment">// 灰色标识为已探测</span><br>      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;vlist.<span class="hljs-property">length</span> ;i++)&#123;<br>        <span class="hljs-keyword">let</span> e = vlist[i]<br>        <span class="hljs-keyword">if</span>( colors[e] == <span class="hljs-string">&#x27;white&#x27;</span>) &#123;<br>          colors[e] = <span class="hljs-string">&#x27;gray&#x27;</span><br>          queue.<span class="hljs-title function_">enqueue</span>(e)<br>        &#125;<br>      &#125;<br>      <span class="hljs-comment">// 访问原点，处理函数</span><br>      <span class="hljs-title function_">handler</span>(v)<br>      colors[v] = <span class="hljs-string">&#x27;black&#x27;</span><br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">// 图的深度优先遍历 - 栈或递归实现 -这里我们使用递归来实现</span><br>  <span class="hljs-title class_">Graph</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">depthFristSearch</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">initv,handler</span>) &#123;<br>    <span class="hljs-keyword">let</span> colors = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">initializeColor</span>() <span class="hljs-comment">// 初始化颜色</span><br>    <span class="hljs-comment">// 从某个节点开始递归</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">reDepthFristSearch</span>(colors,initv,handler)<br>  &#125;<br>  <span class="hljs-comment">// 深度优先遍历递归函数</span><br>  <span class="hljs-title class_">Graph</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">reDepthFristSearch</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">colors,v,handler</span>) &#123;<br>    colors[v] = <span class="hljs-string">&#x27;gray&#x27;</span><br>    <span class="hljs-title function_">handler</span>(v)<br>    <span class="hljs-keyword">let</span> vlist = <span class="hljs-variable language_">this</span>.<span class="hljs-property">edges</span>.<span class="hljs-title function_">get</span>(v)<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i= <span class="hljs-number">0</span>;i&lt;vlist.<span class="hljs-property">length</span> ;i++) &#123;<br>       <span class="hljs-keyword">let</span> e = vlist[i]<br>       <span class="hljs-keyword">if</span>(colors[e] ==<span class="hljs-string">&quot;white&quot;</span>) &#123;<br>         <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">reDepthFristSearch</span>(colors,e,handler)<br>         colors[e] = <span class="hljs-string">&#x27;black&#x27;</span><br>       &#125;<br>    &#125;<br>  &#125; <br>&#125; <br></code></pre></div></td></tr></table></figure>
+<h3 id="测试图"><a href="#测试图" class="headerlink" title="测试图"></a>测试图</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">/* 测试代码 */</span><br><span class="hljs-keyword">const</span> graph = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Graph</span>()<br><br><span class="hljs-keyword">let</span> vertexes = [<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;B&quot;</span>,<span class="hljs-string">&quot;C&quot;</span>,<span class="hljs-string">&quot;D&quot;</span>,<span class="hljs-string">&quot;E&quot;</span>,<span class="hljs-string">&quot;F&quot;</span>,<span class="hljs-string">&quot;G&quot;</span>,<span class="hljs-string">&quot;H&quot;</span>,<span class="hljs-string">&quot;I&quot;</span>]<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span> ;i &lt; vertexes.<span class="hljs-property">length</span> ; i++)&#123;<br>  graph.<span class="hljs-title function_">addVertexes</span>(vertexes[i])<br>&#125;<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;B&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;C&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;D&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;C&quot;</span>,<span class="hljs-string">&quot;D&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;D&quot;</span>,<span class="hljs-string">&quot;G&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;D&quot;</span>,<span class="hljs-string">&quot;H&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;B&quot;</span>,<span class="hljs-string">&quot;E&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;B&quot;</span>,<span class="hljs-string">&quot;F&quot;</span>)<br>graph.<span class="hljs-title function_">addEdges</span>(<span class="hljs-string">&quot;E&quot;</span>,<span class="hljs-string">&quot;I&quot;</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(graph.<span class="hljs-title function_">toString</span>())<br><span class="hljs-comment">// console.log(graph)  </span><br><span class="hljs-comment">//广度优先</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;广度优先：&#x27;</span>)<br>graph.<span class="hljs-title function_">breadthFirstSearch</span>(<span class="hljs-string">&quot;A&quot;</span> , <span class="hljs-keyword">function</span> (<span class="hljs-params">v</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(v)<br>&#125;)<br><span class="hljs-comment">// 深度优先</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;深度优先：&#x27;</span>)<br>graph.<span class="hljs-title function_">depthFristSearch</span>(<span class="hljs-string">&quot;A&quot;</span> , <span class="hljs-keyword">function</span> (<span class="hljs-params">v</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(v)<br>&#125;)<br><br></code></pre></div></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE/">图</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，如需转载或引用，请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">javascript数据结构-搜索排序算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/20/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+                        <span class="hidden-mobile">javascript数据结构-哈希表</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81NjM4My8zMjg0Ng==">
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#lv-container', function() {
+        Fluid.utils.createScript('https://cdn-city.livere.com/js/embed.dist.js');
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="http://imghe.xyz/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <div>很高兴认识你！<i class="iconfont icon-love"></i>  我叫何十七，一个技术爱好者</div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        蜀ICP备2022014552号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2022014552"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>蜀公网安备2022014552号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

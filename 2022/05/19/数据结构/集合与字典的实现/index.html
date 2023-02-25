@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="http://imghe.xyz/img2.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="rgba(37, 45, 56, 0.4)">
+  <meta name="author" content="何十七">
+  <meta name="keywords" content="it博客">
+  
+    <meta name="description" content="在ES6 中的Set就是一个集合类，Map在ES6中就是一个字典集合，这里我们将介绍这两种，并封装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript数据结构-Set集合与Map字典">
+<meta property="og:url" content="https://hzx17.github.io/2022/05/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%9B%86%E5%90%88%E4%B8%8E%E5%AD%97%E5%85%B8%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="blog-he">
+<meta property="og:description" content="在ES6 中的Set就是一个集合类，Map在ES6中就是一个字典集合，这里我们将介绍这两种，并封装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imghe.xyz/img/数据结构2.jpg">
+<meta property="article:published_time" content="2022-05-19T14:33:27.000Z">
+<meta property="article:modified_time" content="2022-06-29T15:15:02.405Z">
+<meta property="article:author" content="何十七">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="字典">
+<meta property="article:tag" content="集合">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imghe.xyz/img/数据结构2.jpg">
+  
+  
+  <title>javascript数据结构-Set集合与Map字典 - blog-he</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/night-owl.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/cursor.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/scollbar.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"hzx17.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                博客
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/photos/">
+                <i class="iconfont icon-instagram-fill"></i>
+                相册
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/message/">
+                <i class="iconfont icon-archive-fill"></i>
+                留言板
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('http://imghe.xyz/img/javascript.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="javascript数据结构-Set集合与Map字典">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      何十七
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-19 22:33" pubdate>
+        2022年5月19日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">javascript数据结构-Set集合与Map字典</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p class="note note-warning">本博客参考于洛伊安妮·格罗纳编著的javascript数据结构与算法第三版及codeWay老师视频或其他博客资料，在此对此表示感谢!
+<br>
+github仓库：<a target="_blank" rel="noopener" href="https://github.com/hzx17/DataStructures" style="color:#428bca;">https://github.com/hzx17/</a><p>
+
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p>几乎每种编程语言中，都有集合结构。集合比较常见的实现方式是哈希表。</p>
+<h3 id="集合特点"><a href="#集合特点" class="headerlink" title="集合特点"></a>集合特点</h3><ul>
+<li><p>集合通常是由一组<strong>无序的</strong>、<strong>不能重复的</strong>元素构成。</p>
+</li>
+<li><p>数学中常指的集合中的元素是可以重复的，但是计算机中集合的元素不能重复。</p>
+</li>
+<li><p>集合是特殊的数组。</p>
+<ul>
+<li>特殊之处在于里面的元素没有顺序，也不能重复。</li>
+<li>没有顺序意味着不能通过下标值进行访问，不能重复意味着相同的对象在集合中只会存在一份。</li>
+</ul>
+</li>
+</ul>
+<h3 id="封装集合"><a href="#封装集合" class="headerlink" title="封装集合"></a>封装集合</h3><p>ES6 中的 <code>Set</code> 就是一个集合类，这里我们重新封装一个 <code>Set</code> 类，了解集合的底层实现。</p>
+<h3 id="Set集合的封装"><a href="#Set集合的封装" class="headerlink" title="Set集合的封装"></a>Set集合的封装</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Set</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// 集合属性,使用keys将其取出</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span> = &#123;&#125;<br>  <span class="hljs-comment">// 集合方法</span><br>  <span class="hljs-comment">//添加方法</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">add</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-comment">// 判断当前集合中是否已经包含了该元素</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">hasOwnProperty</span>(value))&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[value] = value<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>    &#125;<br>  &#125;<br>  <span class="hljs-comment">// 元素是否存在于集合中</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">has</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-title function_">hasOwnProperty</span>(value)<br>  &#125;<br>  <span class="hljs-comment">// remove方法</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">remove</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[value])&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br>    <span class="hljs-comment">// 使用delect操作符，删除元素</span><br>    <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[value]<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>  &#125;<br>  <span class="hljs-comment">// 清除</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">clear</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span> = &#123;&#125;<br>  &#125;<br>  <span class="hljs-comment">// 获取集合长度</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">size</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>).<span class="hljs-property">length</span><br>  &#125;<br>  <span class="hljs-comment">// 获取集合中所有元素</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">values</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>)<br>  &#125;<br><br>  <span class="hljs-comment">// 并集操作</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">union</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">otherSet</span>) &#123;<br>    <span class="hljs-comment">// this:集合对象A</span><br>    <span class="hljs-comment">// otherSet:集合对象B</span><br>    <span class="hljs-keyword">const</span> unionSet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()<br>    <span class="hljs-comment">//将取出集合中所有元素,并放入集合A集合中</span><br>    <span class="hljs-keyword">let</span> values = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">values</span>()<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span> ;i &lt; values.<span class="hljs-property">length</span> ;i++) &#123;<br>      unionSet.<span class="hljs-title function_">add</span>(values[i])<br>    &#125;<br>    values = otherSet.<span class="hljs-title function_">values</span>()<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i&lt;values.<span class="hljs-property">length</span> ;i++) &#123;<br>      unionSet.<span class="hljs-title function_">add</span>(values[i])<br>    &#125;<br>    <span class="hljs-keyword">return</span> unionSet<br>  &#125;<br>  <span class="hljs-comment">//交集操作</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">intersection</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">otherSet</span>) &#123;<br>    <span class="hljs-comment">// this: 为集合A</span><br>    <span class="hljs-comment">// otherSet为集合B</span><br>    <span class="hljs-comment">// 创建交集集合</span><br>    <span class="hljs-keyword">const</span> intersectionSet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()<br>    <span class="hljs-keyword">let</span> valuesA = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">values</span>()<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i&lt;valuesA.<span class="hljs-property">length</span>;i++) &#123;<br>      <span class="hljs-keyword">if</span>(otherSet.<span class="hljs-title function_">has</span>(valuesA[i]))&#123;<br>        intersectionSet.<span class="hljs-title function_">add</span>(valuesA[i])<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> intersectionSet<br>  &#125;<br>  <span class="hljs-comment">// 差集操作</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">difference</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">otherSet</span>) &#123;<br>    <span class="hljs-comment">// 创建差集集合</span><br>    <span class="hljs-keyword">const</span> differenceSet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()<br>    <span class="hljs-comment">// 将集合A（this)取出</span><br>    <span class="hljs-keyword">let</span> values = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">values</span>()<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i= <span class="hljs-number">0</span>; i&lt;values.<span class="hljs-property">length</span>;i++) &#123;<br>      <span class="hljs-keyword">if</span>(!otherSet.<span class="hljs-title function_">has</span>(values[i]))&#123;<br>        differenceSet.<span class="hljs-title function_">add</span>(values[i])<br>      &#125;<br>    &#125;<br>    <span class="hljs-comment">// 将集合B数据取出</span><br>    values = otherSet.<span class="hljs-title function_">values</span>() <br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i= <span class="hljs-number">0</span>; i&lt;values.<span class="hljs-property">length</span>;i++) &#123;<br>      <span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">has</span>(values[i]))&#123;<br>        differenceSet.<span class="hljs-title function_">add</span>(values[i])<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> differenceSet<br>  &#125;<br>  <span class="hljs-comment">// 判断一个集合是否属于另外一个集合</span><br>  <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">sub</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">otherSet</span>) &#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">size</span>() &lt; otherSet.<span class="hljs-title function_">size</span>())&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br>    <span class="hljs-keyword">let</span> valuesB = otherSet.<span class="hljs-title function_">values</span>()<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i =<span class="hljs-number">0</span>;i&lt;valuesB.<span class="hljs-property">length</span> ;i++) &#123;<br>      <span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">has</span>(valuesB[i]))&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="测试Set集合"><a href="#测试Set集合" class="headerlink" title="测试Set集合"></a>测试Set集合</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">/* 测试Set集合类 */</span><br><span class="hljs-comment">// const set = new Set() //集合A</span><br><span class="hljs-comment">// const set1 = new Set() //集合B</span><br><br><span class="hljs-comment">// set1.add(4)</span><br><span class="hljs-comment">// set.add(1)</span><br><span class="hljs-comment">// set.add(2)</span><br><span class="hljs-comment">// // set.add(&quot;2&quot;)</span><br><span class="hljs-comment">// set.add(3)</span><br><span class="hljs-comment">// set.remove(3)</span><br><span class="hljs-comment">// // set.clear()</span><br><span class="hljs-comment">// console.log(set.union(set1).values()) //求并集</span><br><span class="hljs-comment">// console.log(set.values())</span><br><span class="hljs-comment">// console.log(set.size())</span><br><br><span class="hljs-comment">/* 测试交集 */</span><br><span class="hljs-comment">// const setA = new Set()</span><br><span class="hljs-comment">// const setB = new Set()</span><br><br><span class="hljs-comment">// setA.add(&#x27;nba&#x27;)</span><br><span class="hljs-comment">// setA.add(&#x27;nbl&#x27;)</span><br><span class="hljs-comment">// setA.add(&#x27;cba&#x27;)</span><br><br><span class="hljs-comment">// setB.add(&#x27;nba&#x27;)</span><br><span class="hljs-comment">// setB.add(&#x27;cba&#x27;)</span><br><span class="hljs-comment">// setB.add(&#x27;dbba&#x27;)</span><br><span class="hljs-comment">// setB.add(&#x27;cuba&#x27;)</span><br><br><span class="hljs-comment">// console.log(setA.values())</span><br><span class="hljs-comment">// console.log(setB.values())</span><br><span class="hljs-comment">// console.log(setA.intersection(setB))</span><br><span class="hljs-comment">/* 测试差集 */</span><br><span class="hljs-comment">// const setA = new Set()</span><br><span class="hljs-comment">// const setB = new Set()</span><br><br><span class="hljs-comment">// setA.add(&#x27;nba&#x27;)</span><br><span class="hljs-comment">// setA.add(&#x27;nbl&#x27;)</span><br><span class="hljs-comment">// setA.add(&#x27;cba&#x27;)</span><br><br><span class="hljs-comment">// setB.add(&#x27;nba&#x27;)</span><br><span class="hljs-comment">// setB.add(&#x27;cba&#x27;)</span><br><span class="hljs-comment">// setB.add(&#x27;dbba&#x27;)</span><br><span class="hljs-comment">// setB.add(&#x27;cuba&#x27;)</span><br><br><span class="hljs-comment">// console.log(setA.values())</span><br><span class="hljs-comment">// console.log(setB.values())</span><br><span class="hljs-comment">// console.log(setA.difference(setB))</span><br><span class="hljs-comment">/* 测试是否属于子集 */</span><br><span class="hljs-keyword">const</span> setA = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()<br><span class="hljs-keyword">const</span> setB = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()<br><br>setA.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;nba&#x27;</span>)<br>setA.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;nbl&#x27;</span>)<br>setA.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;cba&#x27;</span>)<br><br>setB.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;nba&#x27;</span>)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(setA.<span class="hljs-title function_">values</span>())<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(setB.<span class="hljs-title function_">values</span>())<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(setA.<span class="hljs-title function_">sub</span>(setB))<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="字典特点"><a href="#字典特点" class="headerlink" title="字典特点"></a>字典特点</h3><ul>
+<li>字典存储的是<strong>键值对</strong>，主要特点是<strong>一一对应</strong>。</li>
+<li>比如保存一个人的信息<ul>
+<li>数组形式：<code>[19，&quot;Tom&quot;, 1.65]</code>，可通过下标值取出信息。</li>
+<li>字典形式：<code>&#123;&quot;age&quot;: 19, &quot;name&quot;: &quot;Tom&quot;, &quot;height&quot;: 165&#125;</code>，可以通过 <code>key</code> 取出 <code>value</code>。</li>
+</ul>
+</li>
+<li>此外，在字典中 key 是不能重复且无序的，而 Value 可以重复。</li>
+</ul>
+<h3 id="字典和映射的关系"><a href="#字典和映射的关系" class="headerlink" title="字典和映射的关系"></a>字典和映射的关系</h3><ul>
+<li>有些编程语言中称这种映射关系为<strong>字典</strong>，如 Swift 中的 <code>Dictonary</code>，Python 中的 <code>dict</code>。</li>
+<li>有些编程语言中称这种映射关系为 <strong>Map</strong>，比如 Java 中的 <code>HashMap</code> 和 <code>TreeMap</code> 等。</li>
+</ul>
+<h3 id="在ES6中Map就是一个字典，可以尝试封装"><a href="#在ES6中Map就是一个字典，可以尝试封装" class="headerlink" title="在ES6中Map就是一个字典，可以尝试封装"></a>在ES6中Map就是一个字典，可以尝试封装</h3>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AD%97%E5%85%B8/">字典</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9B%86%E5%90%88/">集合</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，如需转载或引用，请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/20/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91%E7%BB%93%E6%9E%84%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">javascript数据结构-数（二叉搜索树，红黑树）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+                        <span class="hidden-mobile">javascript数据结构-链表</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81NjM4My8zMjg0Ng==">
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#lv-container', function() {
+        Fluid.utils.createScript('https://cdn-city.livere.com/js/embed.dist.js');
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="http://imghe.xyz/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <div>很高兴认识你！<i class="iconfont icon-love"></i>  我叫何十七，一个技术爱好者</div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        蜀ICP备2022014552号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2022014552"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>蜀公网安备2022014552号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

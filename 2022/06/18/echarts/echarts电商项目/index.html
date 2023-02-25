@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="http://imghe.xyz/img2.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="rgba(37, 45, 56, 0.4)">
+  <meta name="author" content="何十七">
+  <meta name="keywords" content="it博客">
+  
+    <meta name="description" content="Echarts可以将数据以图表的形式呈现出来，本文将介绍基本图表类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue+websocket+Echarts的电商项目">
+<meta property="og:url" content="https://hzx17.github.io/2022/06/18/echarts/echarts%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="blog-he">
+<meta property="og:description" content="Echarts可以将数据以图表的形式呈现出来，本文将介绍基本图表类型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imghe.xyz/img/echarts电商.png">
+<meta property="article:published_time" content="2022-06-18T14:33:27.000Z">
+<meta property="article:modified_time" content="2022-06-29T13:33:23.616Z">
+<meta property="article:author" content="何十七">
+<meta property="article:tag" content="Echarts">
+<meta property="article:tag" content="项目">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imghe.xyz/img/echarts电商.png">
+  
+  
+  <title>vue+websocket+Echarts的电商项目 - blog-he</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/night-owl.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/cursor.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/scollbar.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"hzx17.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                博客
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/photos/">
+                <i class="iconfont icon-instagram-fill"></i>
+                相册
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/message/">
+                <i class="iconfont icon-archive-fill"></i>
+                留言板
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('http://imghe.xyz/img/echarts电商.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="vue+websocket+Echarts的电商项目">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      何十七
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-18 22:33" pubdate>
+        2022年6月18日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue+websocket+Echarts的电商项目</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p class="note note-warning">此项目根据黑马程序员视频教程编写。在此致谢黑马程序员，黑马程序员B站链接：<a target="_blank" rel="noopener" href="https://space.bilibili.com/37974444?spm_id_from=333.337.0.0" style="color:#428bca;">点击进入>>></a>
+<br>
+此项目在线地址：<a target="_blank" rel="noopener" href="http://echarts.starhe.xyz/#/" style="color:#428bca;">http://echarts.starhe.xyz</a>
+<br>
+github仓库：<a target="_blank" rel="noopener" href="https://github.com/hzx17/echarts/tree/master/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96%E9%A1%B9%E7%9B%AE" style="color:#428bca;">https://github.com/hzx17/echarts/</a>
+</p>
+
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>  在生活以图表的形式更能给人直观的感受。此项目基于vue2，利用websocket与echarts来开发的。<br><img src="http://imghe.xyz/img/echarts%E7%94%B5%E5%95%86.png" srcset="/img/loading.gif" lazyload alt="项目截图"></p>
+<h1 id="后端项目开发"><a href="#后端项目开发" class="headerlink" title="后端项目开发"></a>后端项目开发</h1><ul>
+<li>后端项目基于koa2框架开发</li>
+</ul>
+<h2 id="koa2框架介绍"><a href="#koa2框架介绍" class="headerlink" title="koa2框架介绍"></a>koa2框架介绍</h2><ul>
+<li>基于Node.js平台的web开发框架</li>
+<li>由express原班人马打造的，express异步是通过回调函数来实现的</li>
+<li>koa异步处理是通过Generator+yieid实现的</li>
+<li>koa2是通过async与await语法糖来实现的（node版本需要在7.6以上）</li>
+<li>支持洋葱模型的中间件</li>
+</ul>
+<h2 id="后台项目结构"><a href="#后台项目结构" class="headerlink" title="后台项目结构"></a>后台项目结构</h2><div class="hljs code-wrapper"><pre><code class="hljs">   - app.js --运行文件
+   - data/  --向前端返回的json数据
+   - middleware/ -- 中间件
+      - koa_response_data.js 
+      - koa_response_duration.js
+      - koa_response_header.js
+   - utils/ --处理函数
+      - file_utils.js
+   - service --存放websocket
+</code></pre></div>
+<h2 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h2><p>在最开始时，我们并未引入websocket，而是前端通过axios请求来向后台请求数据，我们将最基本的接口与前端页面编写完成，再来通过websocket来对项目进行websocket改造。接口实现通过前端发来的请求名，来查询data文件下的json文件。具体实现过程比较简单，可以查看我的github仓库中middleware中中间件代码的编写。</p>
+<h1 id="前端项目页面的基本开发"><a href="#前端项目页面的基本开发" class="headerlink" title="前端项目页面的基本开发"></a>前端项目页面的基本开发</h1><ul>
+<li>我们前台项目由六个页面组成，我们首先进行单独页面的开发，再将六个页面整合到一个页面。</li>
+</ul>
+<h2 id="切换主题的实现"><a href="#切换主题的实现" class="headerlink" title="切换主题的实现"></a>切换主题的实现</h2><p>在echarts官网中下载chalk与vintage两个主题，当然你也可以下载更多的主题来进行切换选择，将主题名存入vuex中theme，注册echarts图表时，传入的主题名为vuex中theme，当切换主题时，就完成了主题切换，当然点击切换主题时，要通过监视属性来监视vuex中theme的改变。将原有的图表销毁，重新调用创建图表的方法。</p>
+<h1 id="利用websocket改造项目"><a href="#利用websocket改造项目" class="headerlink" title="利用websocket改造项目"></a>利用websocket改造项目</h1><h2 id="后台项目"><a href="#后台项目" class="headerlink" title="后台项目"></a>后台项目</h2><ul>
+<li>创建sevice文件，其下创建一个web_socket_serive.js来监听客户端的请求，代码如下  <figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">// webSocket使用步骤：</span><br><span class="hljs-comment">//    1.引入ws包</span><br><span class="hljs-comment">//    2.创建对象</span><br><span class="hljs-comment">//    3.监听事件 </span><br><span class="hljs-comment">//         - 连接事件</span><br><span class="hljs-comment">//         - 接收数据事件</span><br><span class="hljs-comment">//    4.发送数据</span><br><span class="hljs-keyword">const</span> path =<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>)<br><span class="hljs-keyword">const</span> fileUtils=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../utils/file_utils.js&#x27;</span>)<br><span class="hljs-keyword">const</span> webSocket=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ws&#x27;</span>) <span class="hljs-comment">// 引入webSocket</span><br><span class="hljs-comment">// 创建webSocket服务器对象，绑定的端口号时9998</span><br><span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> webSocket.<span class="hljs-title class_">Server</span>(&#123;<br>  <span class="hljs-attr">port</span>:<span class="hljs-number">9998</span><br>&#125;)<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">listen</span> = <span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-comment">// 监听客户端连接事件</span><br>  wss.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;connection&#x27;</span>,<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;客户端连接成功...&#x27;</span>)<br>    <span class="hljs-comment">// msg:由客户端发送个服务端的数据</span><br>    client.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;message&#x27;</span>, <span class="hljs-keyword">async</span> msg =&gt; &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;客户端发送了数据：&#x27;</span>+msg)<br>      <span class="hljs-keyword">let</span> payload = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(msg)  <span class="hljs-comment">// 将前端发送而来的数据接收</span><br>      <span class="hljs-keyword">const</span> action = payload.<span class="hljs-property">action</span><br>      <span class="hljs-keyword">if</span> (action === <span class="hljs-string">&#x27;getData&#x27;</span>) &#123;<br>        <span class="hljs-keyword">let</span> filePath = <span class="hljs-string">&#x27;../data/&#x27;</span> +payload.<span class="hljs-property">chartName</span> + <span class="hljs-string">&#x27;.json&#x27;</span>     <span class="hljs-comment">// 选择的图表路径</span><br>        <span class="hljs-keyword">const</span> ret = <span class="hljs-keyword">await</span> fileUtils.<span class="hljs-title function_">getFileJsonData</span>(filePath)<br>        payload.<span class="hljs-property">data</span> = ret  <span class="hljs-comment">// 增加一个data字段，这个字段就是要返回的json文件内容</span><br>        client.<span class="hljs-title function_">send</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(payload))<br>      &#125;<span class="hljs-keyword">else</span> &#123; <br>        <span class="hljs-comment">// 原封不动的将所接收到的数据发送到所连接到的客户端</span><br>        wss.<span class="hljs-property">clients</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> &#123;<br>          client.<span class="hljs-title function_">send</span>(msg)<br>        &#125;)<br>      &#125;<br>    &#125;)<br>  &#125;)<br>&#125;<br></code></pre></div></td></tr></table></figure></li>
+<li>在app.js中开启websocket监听</li>
+</ul>
+<h2 id="前台项目"><a href="#前台项目" class="headerlink" title="前台项目"></a>前台项目</h2><ul>
+<li>创建一个utils文件，其下创建一个socket_service.js来连接websocket<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SocketService</span> &#123;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">  * 单类</span><br><span class="hljs-comment">  * */</span><br>  <span class="hljs-keyword">static</span> instance = <span class="hljs-literal">null</span><br>  <span class="hljs-keyword">static</span> get <span class="hljs-title class_">Instance</span> () &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SocketService</span>()<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span><br>  &#125;<br><br>  ws = <span class="hljs-literal">null</span> <span class="hljs-comment">// 和服务器连接的Socket对象</span><br>  connected = <span class="hljs-literal">false</span> <span class="hljs-comment">// 标识是否连接成功</span><br>  sendRetry = <span class="hljs-number">0</span> <span class="hljs-comment">// 记录尝试发送数据次数</span><br>  connectRetry = <span class="hljs-number">0</span> <span class="hljs-comment">// 记录尝试重连次数</span><br>  <span class="hljs-comment">// 存储回调函数</span><br>  callBackMapping = &#123;&#125;<br>  <span class="hljs-comment">/* 连接客户端的方法 */</span><br>  connect () &#123;<br>    <span class="hljs-comment">// 连接服务器</span><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">window</span>.<span class="hljs-property">WebSocket</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;你的浏览器不支持WebSocket&#x27;</span>)<br>    &#125;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocket</span>(<span class="hljs-string">&#x27;ws://43.138.103.76:9998&#x27;</span>)<br><br>    <span class="hljs-comment">// 连接成功的事件</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-property">onopen</span> = <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;连接服务器成功...&#x27;</span>)<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">connected</span> = <span class="hljs-literal">true</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">connectRetry</span> = <span class="hljs-number">0</span><br>    &#125;<br>    <span class="hljs-comment">// 连接失败的事件</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-property">onclose</span> = <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;连接服务器失败了&#x27;</span>)<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">connected</span> = <span class="hljs-literal">false</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">connectRetry</span>++<br>      <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">connectRetry</span> &lt; <span class="hljs-number">5</span>) &#123;<br>        <span class="hljs-comment">// 重连尝试</span><br>        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>          <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">connect</span>()<br>        &#125;, <span class="hljs-number">1000</span>)<br>      &#125;<br>    &#125;<br>    <span class="hljs-comment">// 得到服务端发送过来的数据</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-property">onmessage</span> = <span class="hljs-function"><span class="hljs-params">msg</span> =&gt;</span> &#123;<br>      <span class="hljs-comment">// console.log(&#x27;从服务器端接收到了数据...&#x27; + msg.data)</span><br>      <span class="hljs-keyword">const</span> recvData = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(msg.<span class="hljs-property">data</span>)<br>      <span class="hljs-keyword">const</span> socketType = recvData.<span class="hljs-property">socketType</span><br>      <span class="hljs-comment">// 判断回调函数是否存在</span><br>      <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">callBackMapping</span>[socketType]) &#123;<br>        <span class="hljs-keyword">const</span> action = recvData.<span class="hljs-property">action</span><br>        <span class="hljs-keyword">if</span> (action === <span class="hljs-string">&#x27;getData&#x27;</span>) &#123;<br>          <span class="hljs-keyword">const</span> realData = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(recvData.<span class="hljs-property">data</span>)<br>          <span class="hljs-variable language_">this</span>.<span class="hljs-property">callBackMapping</span>[socketType].<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, realData)<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (action === <span class="hljs-string">&#x27;fullScreen&#x27;</span>) &#123;<br>          <span class="hljs-variable language_">this</span>.<span class="hljs-property">callBackMapping</span>[socketType].<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, recvData)<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (action === <span class="hljs-string">&#x27;themeChange&#x27;</span>) &#123;<br>          <span class="hljs-variable language_">this</span>.<span class="hljs-property">callBackMapping</span>[socketType].<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>)<br>        &#125;<br>      &#125;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">// 回调函数的注册</span><br>  registerCallBack (socketType, callBack) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callBackMapping</span>[socketType] = callBack<br>  &#125;<br><br>  <span class="hljs-comment">// 取消回调函数</span><br>  unRegisterCallBack (socketType, callBack) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callBackMapping</span>[socketType] = <span class="hljs-literal">null</span><br>  &#125;<br><br>  <span class="hljs-comment">// 发送数据的方法</span><br>  send (data) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">connected</span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-title function_">send</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data))<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">sendRetry</span>++<br>      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-title function_">send</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data))<br>      &#125;, <span class="hljs-variable language_">this</span>.<span class="hljs-property">sendRetry</span> * <span class="hljs-number">300</span>)<br>    &#125;<br>  &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure></li>
+<li>在vue的created生命周期内调用this.$socket.registerCallBack(‘rankData’, this.getData)将获取数据的函数作为回调函数，this.getData就成为callBackMapping存储函数，在调用发送数据的方法数据就会存储到callBackMapping ，也就是this.getData</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>echarts的基本使用：<a target="_blank" rel="noopener" href="http://starhe.xyz/2022/06/11/echarts/echarts基本图表的使用/" style="color:#428bca;">http://starhe.xyz/2022/06/11/echarts/echarts基本图表的使用/</a><br>利用宝塔面板上线项目：<a target="_blank" rel="noopener" href="http://starhe.xyz/2022/06/17/宝塔面板/利用宝塔面板上线项目/" style="color:#428bca;">http://starhe.xyz/2022/06/17/宝塔面板/利用宝塔面板上线项目/</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Echarts/">Echarts</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Echarts/">Echarts</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%A1%B9%E7%9B%AE/">项目</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，如需转载或引用，请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/14/hexo%E9%85%8D%E7%BD%AE/hexo%E7%9B%B8%E5%86%8C%E5%AE%9E%E7%8E%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">hexo的fluid主题添加相册功能及自定义页面</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/17/%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF/%E5%88%A9%E7%94%A8%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E4%B8%8A%E7%BA%BF%E9%A1%B9%E7%9B%AE/">
+                        <span class="hidden-mobile">利用宝塔面板上线项目</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81NjM4My8zMjg0Ng==">
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#lv-container', function() {
+        Fluid.utils.createScript('https://cdn-city.livere.com/js/embed.dist.js');
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="http://imghe.xyz/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <div>很高兴认识你！<i class="iconfont icon-love"></i>  我叫何十七，一个技术爱好者</div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        蜀ICP备2022014552号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2022014552"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>蜀公网安备2022014552号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

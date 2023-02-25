@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="http://imghe.xyz/img2.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="rgba(37, 45, 56, 0.4)">
+  <meta name="author" content="何十七">
+  <meta name="keywords" content="it博客">
+  
+    <meta name="description" content="汉枫HF2211串口服务器提供串口转网络功能，能够将RS-232&#x2F;485&#x2F;422串口转换成TCP&#x2F;IP协议网络接口，这里将实现485转wifi信号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上">
+<meta property="og:url" content="https://hzx17.github.io/2022/09/14/modbus/mqtt%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="blog-he">
+<meta property="og:description" content="汉枫HF2211串口服务器提供串口转网络功能，能够将RS-232&#x2F;485&#x2F;422串口转换成TCP&#x2F;IP协议网络接口，这里将实现485转wifi信号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imghe.xyz/数据结构/汉枫串口服务器.png">
+<meta property="article:published_time" content="2022-09-14T03:33:27.000Z">
+<meta property="article:modified_time" content="2023-02-25T17:42:38.233Z">
+<meta property="article:author" content="何十七">
+<meta property="article:tag" content="modbus">
+<meta property="article:tag" content="mqtt">
+<meta property="article:tag" content="硬件数据">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imghe.xyz/数据结构/汉枫串口服务器.png">
+  
+  
+  <title>汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上 - blog-he</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/night-owl.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/cursor.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/scollbar.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"hzx17.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                博客
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/photos/">
+                <i class="iconfont icon-instagram-fill"></i>
+                相册
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/message/">
+                <i class="iconfont icon-archive-fill"></i>
+                留言板
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('http://imghe.xyz/数据结构/汉枫串口服务器.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      何十七
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-09-14 11:33" pubdate>
+        2022年9月14日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：1 小时前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="创建正则对象"><a href="#创建正则对象" class="headerlink" title="创建正则对象"></a>创建正则对象</h1><ul>
+<li><p>使用对象创建<br>匹配模式：<br>      i：忽略大写写<br>      g：匹配全局模式<br>      ig：忽略大小写且全局匹配模式<br>      m:执行多行匹配</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg=<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&quot;ab&quot;</span>,<span class="hljs-string">&quot;i&quot;</span>)<br> <span class="hljs-keyword">let</span> str=<span class="hljs-string">&quot;aBc&quot;</span><br> <span class="hljs-keyword">let</span> result=reg.<span class="hljs-title function_">test</span>(str)<br> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result)<br></code></pre></div></td></tr></table></figure></li>
+<li><p>使用字面量创建</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str=<span class="hljs-string">&quot;aBc&quot;</span><br><span class="hljs-keyword">let</span> reg1=<span class="hljs-regexp">/ab/i</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(reg1.<span class="hljs-title function_">test</span>(str))<br></code></pre></div></td></tr></table></figure>
+<p>注意可以为一个正则表达式设置多个匹配模式，顺序无所谓</p>
+<h1 id="正则进阶"><a href="#正则进阶" class="headerlink" title="正则进阶"></a>正则进阶</h1></li>
+<li><p>需求信息：创建一个正则表达式，检查一个字符串中是否含有a或b</p>
+</li>
+<li><p>语法格式：使用|表示或者的意思</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">/* </span><br><span class="hljs-comment">     需求：创建一个正则表达式，检查一个字符串中是否含有a或b</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">const</span> reg=<span class="hljs-regexp">/a|b|c/</span><br><span class="hljs-keyword">let</span> str=<span class="hljs-string">&quot;aBc&quot;</span><br><span class="hljs-keyword">let</span> result=reg.<span class="hljs-title function_">test</span>(str)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result)<br></code></pre></div></td></tr></table></figure></li>
+<li><p>那么我们如何检查一个字符串中是否含有小写字母或字母呢</p>
+</li>
+<li><p>这里我们就有一个需求创建一个字符表达式，检查字符串中是否含有字母</p>
+</li>
+<li><p>提示：常见组合：<br>     [a-z]:任意小写字母<br>     [A-Z]:任意大写字母<br>     [A-z]:任意字符<br>     [0-9]：任意数字</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg1=<span class="hljs-regexp">/[A-z]/</span><br><span class="hljs-keyword">let</span> str1=<span class="hljs-string">&quot;12a&quot;</span><br><span class="hljs-keyword">let</span> result1=reg1.<span class="hljs-title function_">test</span>(str1)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result1)<br></code></pre></div></td></tr></table></figure></li>
+<li><p>需求信息：创建一个正则表达式，检查字符串中是否除了数字还有其他字母</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg2=<span class="hljs-regexp">/[^0-9]/</span><br><span class="hljs-keyword">let</span> str2=<span class="hljs-string">&quot;12abc&quot;</span><br><span class="hljs-keyword">let</span> result2=reg1.<span class="hljs-title function_">test</span>(str2)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result2)<br></code></pre></div></td></tr></table></figure>
+<h1 id="正则方法"><a href="#正则方法" class="headerlink" title="正则方法"></a>正则方法</h1><p>这些正则方法其实都是字符串的方法，只不过将正则表达式作为参数。</p>
+</li>
+<li><p>split()方法：这个方法可以将一个字符串分为一个数组，方法中可以传递一个正则表达式作为参数，方法会根据正则表达式，来拆分字符串，并且是全局匹配</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;1a2b3c4d5e6f7&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">split</span>(<span class="hljs-regexp">/[A-z]/</span>);   <br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure></li>
+<li><p>search方法：这个方法可以搜索字符串中是否含有指定的内容，如果搜索到指定的内容，则返回第一次出现的索引，如果没有查到就返回-1，并且这个方法只会查找第一个，即使正则表达式加上了全局匹配也没用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;hello abc hello aec afc&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">search</span>(<span class="hljs-regexp">/a[bef]c/</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure></li>
+<li><p>match()方法：可以根据正则表达式，从一个字符串中将符合条件的内容提取出来，默认情况下只要找到第一个符合要求的内容后，就会停止检索。但是我们可以向正则表达式中设置全局匹配，这样就可以匹配全部的内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;1a2a3a4a5e6f7A8B9C&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">match</span>(<span class="hljs-regexp">/[a-z]/ig</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure></li>
+<li><p>replce()该方法会传入两个参数，第一个为正则表达式，第二个为替换内容，将正则表达式匹配的内容替换，默认只会替换第一个，同理我们也可以设置全局匹配</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;1a2a3a4a5e6f7A8B9C&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[a-z]/gi</span>, <span class="hljs-string">&quot;@_@&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure>
+<h1 id="正则量词"><a href="#正则量词" class="headerlink" title="正则量词"></a>正则量词</h1></li>
+<li><p>通过量词可以设置一个内容出现的次数，量词只对它前边的一个内容起作用，如果有多个内容可以使用 () 括起来，常见量词如下：<br>      {n} ：正好出现n次<br>      {m,} ：出现m次及以上<br>      {m,n} ：出现m-n次<br>      + ：至少一个，相当于{1,}<br>      * ：0个或多个，相当于{0,}<br>      ? ：0个或1个，相当于{0,1}</p>
+</li>
+<li><p>如果我们要检查或者说判断是否以某个字符或者字符序列开头或者结尾就会使用^和$。<br>      ^ ：表示开头，注意它在[^字符序列]表达的意思不一样<br>      $ ：表示结尾</p>
+</li>
+<li><p>那如果我们想要检查一个字符串中是否含有.和\就会使用转义字符<br>      . ：表示.<br>      \ ：表示<br>      注意：使用构造函数时，由于它的参数是一个字符串，而\是字符串中转义字符，如果要使用\则需要使用\来代替<br><br>      除了以上两种特殊的字符，其实还有很多如下所示：<br>      \w ：任意字母、数字、<em>，相当于[A-z0-9</em>]<br>      \W ：除了字母、数字、<em>，相当于[^A-z0-9</em>]<br>      \d ：任意的数字，相当于[0-9]<br>      \D ：除了任意的数字，相当于[^0-9]<br>      \s ：空格<br>      \S ：除了空格<br>      \b ：单词边界<br>      \B ：除了单词边界</p>
+</li>
+</ul>
+<h1 id="正则实例"><a href="#正则实例" class="headerlink" title="正则实例"></a>正则实例</h1><h2 id="用户正则"><a href="#用户正则" class="headerlink" title="用户正则"></a>用户正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">//⽤户名正则，4到16位（字母，数字，下划线，减号）</span><br>uPattern = <span class="hljs-regexp">/^[a-zA-Z0-9_-]&#123;4,16&#125;$/</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="密码强度正则"><a href="#密码强度正则" class="headerlink" title="密码强度正则"></a>密码强度正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">//密码强度正则，最少6位，包括⾄少1个⼤写字母，1个⼩写字母，1个数字，1个特殊字符</span><br>pPattern = <span class="hljs-regexp">/^.*(?=.&#123;6,&#125;)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&amp;*? ]).*$/</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="手机号正则"><a href="#手机号正则" class="headerlink" title="手机号正则"></a>手机号正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">mPattern = <span class="hljs-regexp">/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d&#123;8&#125;$/</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="身份证号正则"><a href="#身份证号正则" class="headerlink" title="身份证号正则"></a>身份证号正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">cP = <span class="hljs-regexp">/^[1-9]\d&#123;5&#125;(18|19|([23]\d))\d&#123;2&#125;((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d&#123;3&#125;[0-9Xx]$/</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="车牌号正则"><a href="#车牌号正则" class="headerlink" title="车牌号正则"></a>车牌号正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">cPattern = <span class="hljs-regexp">/^[京津沪渝冀豫云辽⿊湘皖鲁新苏浙赣鄂桂⽢晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]&#123;1&#125;[A-Z]&#123;1&#125;[A-Z0-9]&#123;4&#125;[A-Z0-9挂学警港澳]&#123;1&#125;$/</span><br></code></pre></div></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/modbus/">modbus</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/modbus/">modbus</a>
+                    
+                      <a class="hover-with-bg" href="/tags/mqtt/">mqtt</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%A1%AC%E4%BB%B6%E6%95%B0%E6%8D%AE/">硬件数据</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，如需转载或引用，请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/14/hexo%E9%85%8D%E7%BD%AE/hexo%E7%9B%B8%E5%86%8C%E5%AE%9E%E7%8E%B0/">
+                        <span class="hidden-mobile">hexo的fluid主题添加相册功能及自定义页面</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81NjM4My8zMjg0Ng==">
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#lv-container', function() {
+        Fluid.utils.createScript('https://cdn-city.livere.com/js/embed.dist.js');
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="http://imghe.xyz/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <div>很高兴认识你！<i class="iconfont icon-love"></i>  我叫何十七，一个技术爱好者</div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        蜀ICP备2022014552号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2022014552"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>蜀公网安备2022014552号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

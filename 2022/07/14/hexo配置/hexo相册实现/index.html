@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="http://imghe.xyz/img2.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="rgba(37, 45, 56, 0.4)">
+  <meta name="author" content="何十七">
+  <meta name="keywords" content="it博客">
+  
+    <meta name="description" content="hexo是一款基于node.js的快速搭建个人博客的一个框架,同时我们可以去自定义页面来丰富我们的博客， 本文章将介绍利用hexo添加个人相册!!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo的fluid主题添加相册功能及自定义页面">
+<meta property="og:url" content="https://hzx17.github.io/2022/07/14/hexo%E9%85%8D%E7%BD%AE/hexo%E7%9B%B8%E5%86%8C%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="blog-he">
+<meta property="og:description" content="hexo是一款基于node.js的快速搭建个人博客的一个框架,同时我们可以去自定义页面来丰富我们的博客， 本文章将介绍利用hexo添加个人相册!!">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imghe.xyz/img/相册.jpg">
+<meta property="article:published_time" content="2022-07-14T03:33:27.000Z">
+<meta property="article:modified_time" content="2022-06-29T13:29:58.248Z">
+<meta property="article:author" content="何十七">
+<meta property="article:tag" content="hexo配置">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imghe.xyz/img/相册.jpg">
+  
+  
+  <title>hexo的fluid主题添加相册功能及自定义页面 - blog-he</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/night-owl.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/cursor.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/scollbar.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"hzx17.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                博客
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/photos/">
+                <i class="iconfont icon-instagram-fill"></i>
+                相册
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/message/">
+                <i class="iconfont icon-archive-fill"></i>
+                留言板
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('http://imghe.xyz/img/相册.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="hexo的fluid主题添加相册功能及自定义页面">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      何十七
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-07-14 11:33" pubdate>
+        2022年7月14日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      10k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      86 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">hexo的fluid主题添加相册功能及自定义页面</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p class="note note-warning">在阅读本博客之前，我默认你已经配置好你的hexo博客。
+如还未配置请参考hexo配置文档:<a target="_blank" rel="noopener" href="https://hexo.bootcss.com/" style="color:#428bca;">https://hexo.bootcss.com</a>
+，我的博客主题是fluid，fluid用户参考手册：<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs" style="color:#428bca;">https://hexo.fluid-dev.com/docs</a>
+</p>
+
+<h1 id="创建相册页面"><a href="#创建相册页面" class="headerlink" title="创建相册页面"></a>创建相册页面</h1><p>新建相册页 hexo new page photos,编辑 &#x2F;source&#x2F;photos&#x2F;index.md，输入以下内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">---<br><span class="hljs-attr">title</span>: 相册<br><span class="hljs-attr">subtitle</span>: 用一张小小的照片，记录下身边的美好瞬间<br><span class="hljs-attr">date</span>: <span class="hljs-number">2022</span>-<span class="hljs-number">4</span>-<span class="hljs-number">30</span> <span class="hljs-number">19</span>:<span class="hljs-number">04</span>:<span class="hljs-number">03</span><br><span class="hljs-attr">layout</span>: photo<br><span class="hljs-attr">comment</span>:      <span class="hljs-comment">//评论插件，删除，如想要填入评论插件，开启你的评论插件</span><br>---<br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.ImageGrid</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">max-width</span>: <span class="hljs-number">1040px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> auto;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">text-align</span>: center;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.card</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">overflow</span>: hidden;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">transition</span>: .<span class="hljs-number">3s</span> ease-in-out;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">8px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#efefef</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">1.4px</span>;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.ImageInCard</span> <span class="hljs-selector-tag">img</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">8px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">width</span>:<span class="hljs-number">100%</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">height</span>:<span class="hljs-number">100%</span>;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-keyword">@media</span> (<span class="hljs-attribute">prefers-color-scheme</span>: dark) &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-selector-class">.card</span> &#123;<span class="hljs-attribute">background-color</span>: <span class="hljs-number">#333</span>;&#125;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;imageTab&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ImageGrid&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></code></pre></div></td></tr></table></figure>
+<h1 id="Github-picgo搭建图床"><a href="#Github-picgo搭建图床" class="headerlink" title="Github+picgo搭建图床"></a>Github+picgo搭建图床</h1><p class="note note-danger">我的相册是采用GitHub+jsDelivr加速来加载图片，这样有利于更快加载图片，当然你可以选择跳过这一步，将你的图片放到你的博客中。或者搭建其他图床。<p>
+
+<h2 id="下载picgo"><a href="#下载picgo" class="headerlink" title="下载picgo"></a>下载picgo</h2><p>百度搜索picgo下载picgo</p>
+<p>picgo下载网址：<a target="_blank" rel="noopener" href="https://molunerfinn.com/PicGo/">https://molunerfinn.com/PicGo/</a></p>
+<p><img src="http://imghe.xyz/img/picgo.png" srcset="/img/loading.gif" lazyload alt="picgo安装完成"></p>
+<h2 id="创建github仓库"><a href="#创建github仓库" class="headerlink" title="创建github仓库"></a>创建github仓库</h2><p>   创建一个公共的仓库，用来存放你的图片。</p>
+<h2 id="在picgo中设置图床"><a href="#在picgo中设置图床" class="headerlink" title="在picgo中设置图床"></a>在picgo中设置图床</h2><p>在picgo中选择github图床，如果你的图床仓库为其他的，请依据的你选择。以下是github图床设置<br>仓库名选择你创建的仓库，分支名为main，存储路径按照你相册文件名存放。设置自定义域名，我的域名中加入了cdn.jsdelivr这个会加速我们的图片加载速度。token设置在你创建的github仓库中点击setting找到personal access token将创建好的token复制进token设置中<br><img src="http://imghe.xyz/img/%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE1.png" srcset="/img/loading.gif" lazyload alt="picgo图床设置"></p>
+<p>至此我们的图床设置完毕，点击上传图片之后，图片就可以保存到githu仓库中，在picgo中选择相册，即可查看图片链接来进行访问</p>
+<h1 id="处理图片json文件"><a href="#处理图片json文件" class="headerlink" title="处理图片json文件"></a>处理图片json文件</h1> <p class="note note-primary">这一步是为了将相册所有的图片信息目录及大小保存到json文件中，访问通过固定域名+json文件中的图片路径即可访问<p>
+
+<h2 id="在blog目录下创建相册文件"><a href="#在blog目录下创建相册文件" class="headerlink" title="在blog目录下创建相册文件"></a>在blog目录下创建相册文件</h2><p>   创建imagescreate文件夹，结构如下图所示：<br><img src="http://imghe.xyz/img/12shd.png" srcset="/img/loading.gif" lazyload alt="相册文件结构"></p>
+<h2 id="创建phototool-js文件处理图片"><a href="#创建phototool-js文件处理图片" class="headerlink" title="创建phototool.js文件处理图片"></a>创建phototool.js文件处理图片</h2><p> 内容代码如下：<br> <figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"> <span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs-extra&#x27;</span>);<br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">const</span> imageSize = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;image-size&#x27;</span>);<br><br><span class="hljs-keyword">const</span> rootPath=<span class="hljs-string">&quot;imagescreate/&quot;</span>   <span class="hljs-comment">//相册相对路径</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PhotoExtension</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">size</span> = <span class="hljs-number">64</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">offset</span> = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>];<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Photo</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">dirName</span> = <span class="hljs-string">&#x27;&#x27;</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">fileName</span> = <span class="hljs-string">&#x27;&#x27;</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">iconID</span> = <span class="hljs-string">&#x27;&#x27;</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">extension</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PhotoExtension</span>();<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PhotoGroup</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = <span class="hljs-string">&#x27;&#x27;</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">children</span> = [];<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">createPlotIconsData</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">let</span> allPlots = [];<br>    <span class="hljs-keyword">let</span> allPlotGroups = [];<br><br>    <span class="hljs-keyword">const</span> plotJsonFile = path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;./photosInfo.json&#x27;</span>);<br>    <span class="hljs-keyword">const</span> plotGroupJsonFile = path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;./photos.json&#x27;</span>);<br><br>    <span class="hljs-keyword">if</span> (fs.<span class="hljs-title function_">existsSync</span>(plotJsonFile)) &#123;<br>        allPlots = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(fs.<span class="hljs-title function_">readFileSync</span>(plotJsonFile));<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (fs.<span class="hljs-title function_">existsSync</span>(plotGroupJsonFile)) &#123;<br>        allPlotGroups = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(fs.<span class="hljs-title function_">readFileSync</span>(plotGroupJsonFile));<br>    &#125;<br><br>    fs.<span class="hljs-title function_">readdirSync</span>(__dirname).<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">dirName</span>) &#123;<br>        <span class="hljs-keyword">const</span> stats = fs.<span class="hljs-title function_">statSync</span>(path.<span class="hljs-title function_">join</span>(__dirname, dirName));<br>        <span class="hljs-keyword">const</span> isDir = stats.<span class="hljs-title function_">isDirectory</span>();<br>        <span class="hljs-keyword">if</span> (isDir) &#123;<br>            <span class="hljs-keyword">const</span> subfiles = fs.<span class="hljs-title function_">readdirSync</span>(path.<span class="hljs-title function_">join</span>(__dirname, dirName));<br>            subfiles.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">subfileName</span>) &#123;<br>                <span class="hljs-comment">// 如果已经存在 则不再处理</span><br>                <span class="hljs-comment">// if (allPlots.find(o =&gt; o.fileName === subfileName &amp;&amp; o.dirName === dirName)) &#123;</span><br>                <span class="hljs-comment">//     return;</span><br>                <span class="hljs-comment">// &#125;</span><br><br>                <span class="hljs-comment">// 新增标</span><br>                <span class="hljs-keyword">const</span> plot = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Photo</span>();<br>                plot.<span class="hljs-property">dirName</span> = dirName;<br>                plot.<span class="hljs-property">fileName</span> = subfileName;<br>                <span class="hljs-keyword">const</span> imageInfo = <span class="hljs-title function_">imageSize</span>(rootPath+dirName + <span class="hljs-string">&quot;/&quot;</span> + subfileName);<br>                plot.<span class="hljs-property">iconID</span> = imageInfo.<span class="hljs-property">width</span> + <span class="hljs-string">&#x27;.&#x27;</span> + imageInfo.<span class="hljs-property">height</span> + <span class="hljs-string">&#x27; &#x27;</span> + subfileName;<br>                allPlots.<span class="hljs-title function_">push</span>(plot);<br>                <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`RD: createPlotIconsData -&gt; new plot`</span>, plot);<br><br>                <span class="hljs-comment">// 为新增标添加分组 暂时以它所处的文件夹为分组</span><br>                <span class="hljs-keyword">let</span> group = allPlotGroups.<span class="hljs-title function_">find</span>(<span class="hljs-function"><span class="hljs-params">o</span> =&gt;</span> o.<span class="hljs-property">name</span> === dirName);<br>                <span class="hljs-keyword">if</span> (!group) &#123;<br>                    group = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PhotoGroup</span>();<br>                    group.<span class="hljs-property">name</span> = dirName;<br>                    allPlotGroups.<span class="hljs-title function_">push</span>(group);<br>                    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`RD: createPlotIconsData -&gt; new group`</span>, group);<br>                &#125;<br>                group.<span class="hljs-property">children</span>.<span class="hljs-title function_">push</span>(plot.<span class="hljs-property">iconID</span>);<br>            &#125;);<br>        &#125;<br>    &#125;);<br><br>    fs.<span class="hljs-title function_">writeJSONSync</span>(plotJsonFile, allPlots);<br>    fs.<span class="hljs-title function_">writeJSONSync</span>(plotGroupJsonFile, allPlotGroups);<br>&#125;<br><br><span class="hljs-title function_">createPlotIconsData</span>();<br></code></pre></div></td></tr></table></figure></p>
+<h2 id="生成json文件"><a href="#生成json文件" class="headerlink" title="生成json文件"></a>生成json文件</h2><ul>
+<li>运行npm i -S image-size 导入获取文件大小第三方包</li>
+<li>运行node imagescreate&#x2F;phototool.js生成json文件<br> 找到photos.json,将其复制到source&#x2F;photos目录下。内容示例： <figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json"> <span class="hljs-punctuation">[</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;美食&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-string">&quot;1036.584 foot1.jpg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;1036.584 foot1.jpg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;3000.4000 IMG20190906183445.jpg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;4000.3000 IMG20210306173452.jpg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;4000.3000 IMG20210624124705.jpg&quot;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;风景&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-string">&quot;1036.584 foot1.jpg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;1036.584 foot1.jpg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;3000.4000 IMG20190906183445.jpg&quot;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><br>   <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;生活&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-string">&quot;2401.1600 1619402831098.jpeg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;1440.1080 1637328153132.jpeg&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;1440.1080 1637581717468.jpeg&quot;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></div></td></tr></table></figure>
+<h1 id="编写相册js文件"><a href="#编写相册js文件" class="headerlink" title="编写相册js文件"></a>编写相册js文件</h1> 在 &#x2F;source&#x2F;js&#x2F; 目录下创建 photoWall.js：<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> imgDataPath = <span class="hljs-string">&quot;/photos/photos.json&quot;</span>; <span class="hljs-comment">//图片名称高宽信息json文件路径   //填入你的路径，注意修改</span><br><span class="hljs-keyword">var</span> imgPath = <span class="hljs-string">&quot;http://imghe.xyz/&quot;</span>; <span class="hljs-comment">//图片访问路径   //填入你的路径，注意修改</span><br><span class="hljs-keyword">var</span> imgMaxNum = <span class="hljs-number">50</span>; <span class="hljs-comment">//图片显示数量</span><br><br><span class="hljs-keyword">var</span> windowWidth =<br>  <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> ||<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-property">clientWidth</span> ||<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">clientWidth</span>;<br><span class="hljs-keyword">if</span> (windowWidth &lt; <span class="hljs-number">768</span>) &#123;<br>  <span class="hljs-keyword">var</span> imageWidth = <span class="hljs-number">145</span>; <span class="hljs-comment">//图片显示宽度(手机端)</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  <span class="hljs-keyword">var</span> imageWidth = <span class="hljs-number">250</span>; <span class="hljs-comment">//图片显示宽度</span><br>&#125;<br><br><span class="hljs-keyword">const</span> photo = &#123;<br>  <span class="hljs-attr">page</span>: <span class="hljs-number">1</span>,<br>  <span class="hljs-attr">offset</span>: imgMaxNum,<br>  <span class="hljs-attr">init</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> that = <span class="hljs-variable language_">this</span>;<br>    $.<span class="hljs-title function_">getJSON</span>(imgDataPath, <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>      that.<span class="hljs-title function_">render</span>(that.<span class="hljs-property">page</span>, data);<br>      <span class="hljs-comment">//that.scroll(data);</span><br>      that.<span class="hljs-title function_">eventListen</span>(data);<br>    &#125;);<br>  &#125;,<br>  <span class="hljs-title function_">constructHtml</span>(<span class="hljs-params">options</span>) &#123;<br>    <span class="hljs-keyword">const</span> &#123;<br>      imageWidth,<br>      imageX,<br>      imageY,<br>      name,<br>      imgPath,<br>      imgName,<br>      imgNameWithPattern,<br>    &#125; = options;<br>    <span class="hljs-keyword">const</span> htmlEle = <span class="hljs-string">`&lt;div class=&quot;card lozad&quot; style=&quot;width:<span class="hljs-subst">$&#123;imageWidth&#125;</span>px&quot;&gt;</span><br><span class="hljs-string">                  &lt;div class=&quot;ImageInCard&quot; style=&quot;height:<span class="hljs-subst">$&#123;</span></span><br><span class="hljs-subst"><span class="hljs-string">                    (imageWidth * imageY) / imageX</span></span><br><span class="hljs-subst"><span class="hljs-string">                  &#125;</span>px&quot;&gt;</span><br><span class="hljs-string">                    &lt;a data-fancybox=&quot;gallery&quot; href=&quot;<span class="hljs-subst">$&#123;imgPath&#125;</span><span class="hljs-subst">$&#123;name&#125;</span>/<span class="hljs-subst">$&#123;imgNameWithPattern&#125;</span>&quot;</span><br><span class="hljs-string">                          data-caption=&quot;<span class="hljs-subst">$&#123;imgName&#125;</span>&quot; title=&quot;<span class="hljs-subst">$&#123;imgName&#125;</span>&quot;&gt;</span><br><span class="hljs-string">                            &lt;img  class=&quot;lazyload&quot; data-src=&quot;<span class="hljs-subst">$&#123;imgPath&#125;</span><span class="hljs-subst">$&#123;name&#125;</span>/<span class="hljs-subst">$&#123;imgNameWithPattern&#125;</span>&quot;</span><br><span class="hljs-string">                            src=&quot;data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==&quot;</span><br><span class="hljs-string">                            onload=&quot;lzld(this)&quot;</span><br><span class="hljs-string">                            lazyload=&quot;auto&quot;&gt;</span><br><span class="hljs-string">                        &lt;/a&gt;</span><br><span class="hljs-string">                  &lt;/div&gt;</span><br><span class="hljs-string">                &lt;/div&gt;`</span>;<br>    <span class="hljs-keyword">return</span> htmlEle;<br>  &#125;,<br>  <span class="hljs-attr">render</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">page, data = []</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = data;<br>    <span class="hljs-keyword">if</span> (!data.<span class="hljs-property">length</span>) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">var</span> html,<br>      imgNameWithPattern,<br>      imgName,<br>      imageSize,<br>      imageX,<br>      imageY,<br>      li = <span class="hljs-string">&quot;&quot;</span>;<br><br>    <span class="hljs-keyword">let</span> liHtml = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">let</span> contentHtml = <span class="hljs-string">&quot;&quot;</span>;<br><br>    data.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">item, index</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">const</span> activeClass = index === <span class="hljs-number">0</span> ? <span class="hljs-string">&quot;active&quot;</span> : <span class="hljs-string">&quot;&quot;</span>;<br>      liHtml += <span class="hljs-string">`&lt;li class=&quot;nav-item&quot; role=&quot;presentation&quot;&gt;</span><br><span class="hljs-string">          &lt;a class=&quot;nav-link <span class="hljs-subst">$&#123;activeClass&#125;</span> photo-tab&quot; id=&quot;home-tab&quot; photo-uuid=&quot;<span class="hljs-subst">$&#123;item.name&#125;</span>&quot; data-toggle=&quot;tab&quot; href=&quot;#<span class="hljs-subst">$&#123;item.name&#125;</span>&quot;  role=&quot;tab&quot; aria-controls=&quot;<span class="hljs-subst">$&#123;item.name&#125;</span>&quot; aria-selected=&quot;true&quot;&gt;<span class="hljs-subst">$&#123;item.name&#125;</span>&lt;/a&gt;</span><br><span class="hljs-string">        &lt;/li&gt;`</span>;<br>    &#125;);<br>    <span class="hljs-keyword">const</span> [initData = &#123;&#125;] = data;<br>    <span class="hljs-keyword">const</span> &#123; children = [],name &#125; = initData;<br>    children.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">item, index</span>) =&gt;</span> &#123;<br>      imgNameWithPattern = item.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot; &quot;</span>)[<span class="hljs-number">1</span>];<br>      imgName = imgNameWithPattern.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">0</span>];<br>      imageSize = item.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot; &quot;</span>)[<span class="hljs-number">0</span>];<br>      imageX = imageSize.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">0</span>];<br>      imageY = imageSize.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">1</span>];<br>      <span class="hljs-keyword">let</span> imgOptions = &#123;<br>        imageWidth,<br>        imageX,<br>        imageY,<br>        name,<br>        imgName,<br>        imgPath,<br>        imgNameWithPattern,<br>      &#125;;<br>      li += <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">constructHtml</span>(imgOptions);<br>    &#125;);<br>    contentHtml += <span class="hljs-string">` &lt;div class=&quot;tab-pane fade show active&quot;  role=&quot;tabpanel&quot; aria-labelledby=&quot;home-tab&quot;&gt;<span class="hljs-subst">$&#123;li&#125;</span>&lt;/div&gt;`</span>;<br><br>    <span class="hljs-keyword">const</span> ulHtml = <span class="hljs-string">`&lt;ul class=&quot;nav nav-tabs&quot; id=&quot;myTab&quot; role=&quot;tablist&quot;&gt;<span class="hljs-subst">$&#123;liHtml&#125;</span>&lt;/ul&gt;`</span>;<br>    <span class="hljs-keyword">const</span> tabContent = <span class="hljs-string">`&lt;div class=&quot;tab-content&quot; id=&quot;myTabContent&quot;&gt;<span class="hljs-subst">$&#123;contentHtml&#125;</span>&lt;/div&gt;`</span>;<br><br>    $(<span class="hljs-string">&quot;#imageTab&quot;</span>).<span class="hljs-title function_">append</span>(ulHtml);<br>    $(<span class="hljs-string">&quot;.ImageGrid&quot;</span>).<span class="hljs-title function_">append</span>(tabContent);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">minigrid</span>();<br>  &#125;,<br>  <span class="hljs-attr">eventListen</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>    <span class="hljs-keyword">let</span> self = <span class="hljs-variable language_">this</span>;<br>    <span class="hljs-keyword">var</span> html,<br>      imgNameWithPattern,<br>      imgName,<br>      imageSize,<br>      imageX,<br>      imageY,<br>      li = <span class="hljs-string">&quot;&quot;</span>;<br>    $(<span class="hljs-string">&#x27;a[data-toggle=&quot;tab&quot;]&#x27;</span>).<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;shown.bs.tab&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) &#123;<br>      $(<span class="hljs-string">&quot;.ImageGrid&quot;</span>).<span class="hljs-title function_">empty</span>();<br>      <span class="hljs-keyword">const</span> selectId = $(e.<span class="hljs-property">target</span>).<span class="hljs-title function_">attr</span>(<span class="hljs-string">&quot;photo-uuid&quot;</span>);<br>      <span class="hljs-keyword">const</span> selectedData = data.<span class="hljs-title function_">find</span>(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> data.<span class="hljs-property">name</span> === selectId) || &#123;&#125;;<br>      <span class="hljs-keyword">const</span> &#123; children,name &#125; = selectedData;<br>      <span class="hljs-keyword">let</span> li = <span class="hljs-string">&quot;&quot;</span>;<br>      children.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">item, index</span>) =&gt;</span> &#123;<br>        imgNameWithPattern = item.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot; &quot;</span>)[<span class="hljs-number">1</span>];<br>        imgName = imgNameWithPattern.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">0</span>];<br>        imageSize = item.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot; &quot;</span>)[<span class="hljs-number">0</span>];<br>        imageX = imageSize.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">0</span>];<br>        imageY = imageSize.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">1</span>];<br>        <span class="hljs-keyword">let</span> imgOptions = &#123;<br>          imageWidth,<br>          imageX,<br>          imageY,<br>          name,<br>          imgName,<br>          imgPath,<br>          imgNameWithPattern,<br>        &#125;;<br>        li += self.<span class="hljs-title function_">constructHtml</span>(imgOptions);<br>      &#125;);<br>      $(<span class="hljs-string">&quot;.ImageGrid&quot;</span>).<span class="hljs-title function_">append</span>(li);<br>      self.<span class="hljs-title function_">minigrid</span>();<br>    &#125;);<br>  &#125;,<br>  <span class="hljs-attr">minigrid</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> grid = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Minigrid</span>(&#123;<br>      <span class="hljs-attr">container</span>: <span class="hljs-string">&quot;.ImageGrid&quot;</span>,<br>      <span class="hljs-attr">item</span>: <span class="hljs-string">&quot;.card&quot;</span>,<br>      <span class="hljs-attr">gutter</span>: <span class="hljs-number">12</span>,<br>    &#125;);<br>    grid.<span class="hljs-title function_">mount</span>();<br>    $(<span class="hljs-variable language_">window</span>).<span class="hljs-title function_">resize</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      grid.<span class="hljs-title function_">mount</span>();<br>    &#125;);<br>  &#125;,<br>&#125;;<br>photo.<span class="hljs-title function_">init</span>();<br></code></pre></div></td></tr></table></figure>
+然后使用注册器将需要的js,css注入,在scripts&#x2F;injector.js(如没有,则创建)中输入以下内容:<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> js = hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">helper</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;js&#x27;</span>).<span class="hljs-title function_">bind</span>(hexo);<br><span class="hljs-keyword">const</span> css = hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">helper</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;css&#x27;</span>).<span class="hljs-title function_">bind</span>(hexo);<br><br><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">injector</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;head_end&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">css</span>(<span class="hljs-string">&#x27;https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css&#x27;</span>);<br>&#125;, <span class="hljs-string">&#x27;photo&#x27;</span>);<br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">injector</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;head_end&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">js</span>(<span class="hljs-string">&#x27;https://cdn.jsdelivr.net/npm/jquery@3/dist/&#x27;</span>);<br>  &#125;, <span class="hljs-string">&#x27;photo&#x27;</span>);<br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">injector</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;head_end&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>     <span class="hljs-keyword">return</span> <span class="hljs-title function_">js</span>(<span class="hljs-string">&#x27;https://cdn.bootcdn.net/ajax/libs/lazyloadjs/3.2.2/lazyload.js&#x27;</span>);<br>&#125;, <span class="hljs-string">&#x27;photo&#x27;</span>);<br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">injector</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;head_end&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>   <span class="hljs-keyword">return</span> <span class="hljs-title function_">js</span>(<span class="hljs-string">&#x27;https://cdn.jsdelivr.net/npm/minigrid@3.1.1/dist/minigrid.min.js&#x27;</span>);<br>&#125;, <span class="hljs-string">&#x27;photo&#x27;</span>);<br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">injector</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;body_end&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">js</span>(<span class="hljs-string">&#x27;/js/photoWall.js&#x27;</span>);  <br>&#125;,<span class="hljs-string">&quot;photo&quot;</span>);<br></code></pre></div></td></tr></table></figure>
+至此博客相册功能已经完成</li>
+</ul>
+<h1 id="页面自定义"><a href="#页面自定义" class="headerlink" title="页面自定义"></a>页面自定义</h1><p> hexo框架基本具备了博客搭建的基本功能，通常情况我们修改配置就可以了，但是为了使页面更美观，我们通常情况下会自定义页面，你可以自己编写css、js等，通过主题配置引入，具体方法参见主题文档。也可以使用注入器来自定义页面，参考文档：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/api/injector.html">https://hexo.io/zh-cn/api/injector.html</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/hexo%E9%85%8D%E7%BD%AE/">hexo配置</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/hexo%E9%85%8D%E7%BD%AE/">hexo配置</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，如需转载或引用，请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/14/modbus/mqtt%E7%9A%84%E4%BD%BF%E7%94%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/18/echarts/echarts%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE/">
+                        <span class="hidden-mobile">vue+websocket+Echarts的电商项目</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81NjM4My8zMjg0Ng==">
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#lv-container', function() {
+        Fluid.utils.createScript('https://cdn-city.livere.com/js/embed.dist.js');
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="http://imghe.xyz/img/info.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;"> <Br><div style="text-align: center; color:#c4c6c9">有问题在留言板留言，或者添加我的微信</div> 
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <div>很高兴认识你！<i class="iconfont icon-love"></i>  我叫何十七，一个技术爱好者</div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        蜀ICP备2022014552号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2022014552"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>蜀公网安备2022014552号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
