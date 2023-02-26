@@ -16,25 +16,25 @@
   <meta name="author" content="何十七">
   <meta name="keywords" content="it博客">
   
-    <meta name="description" content="汉枫HF2211串口服务器提供串口转网络功能，能够将RS-232&#x2F;485&#x2F;422串口转换成TCP&#x2F;IP协议网络接口，这里将实现485转wifi信号">
+    <meta name="description" content="Modbus Slave是一个模拟Modbus协议从机的上位机软件，主要用于模拟测试跟其他主机设备通信的过程，本文将使用node.js获取模拟的数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上">
-<meta property="og:url" content="https://hzx17.github.io/2022/09/14/modbus/mqtt%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="【硬件数据模拟】 使用Modbus Slave软件模拟数据">
+<meta property="og:url" content="https://hzx17.github.io/2023/02/11/modbus/modbus%E6%A8%A1%E6%8B%9F/index.html">
 <meta property="og:site_name" content="blog-he">
-<meta property="og:description" content="汉枫HF2211串口服务器提供串口转网络功能，能够将RS-232&#x2F;485&#x2F;422串口转换成TCP&#x2F;IP协议网络接口，这里将实现485转wifi信号">
+<meta property="og:description" content="Modbus Slave是一个模拟Modbus协议从机的上位机软件，主要用于模拟测试跟其他主机设备通信的过程，本文将使用node.js获取模拟的数据">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://imghe.xyz/数据结构/汉枫串口服务器.png">
-<meta property="article:published_time" content="2022-09-14T03:33:27.000Z">
-<meta property="article:modified_time" content="2023-02-25T17:42:38.233Z">
+<meta property="og:image" content="http://imghe.xyz/数据结构/modbusSalve.png">
+<meta property="article:published_time" content="2023-02-11T03:33:27.000Z">
+<meta property="article:modified_time" content="2023-02-26T07:28:53.964Z">
 <meta property="article:author" content="何十七">
 <meta property="article:tag" content="modbus">
 <meta property="article:tag" content="mqtt">
 <meta property="article:tag" content="硬件数据">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://imghe.xyz/数据结构/汉枫串口服务器.png">
+<meta name="twitter:image" content="http://imghe.xyz/数据结构/modbusSalve.png">
   
   
-  <title>汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上 - blog-he</title>
+  <title>【硬件数据模拟】 使用Modbus Slave软件模拟数据 - blog-he</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -221,12 +221,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('http://imghe.xyz/数据结构/汉枫串口服务器.png') no-repeat center center;
+         style="background: url('http://imghe.xyz/数据结构/网络之间的关系.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上">
+            <span class="h2" id="subtitle" title="【硬件数据模拟】 使用Modbus Slave软件模拟数据">
               
             </span>
 
@@ -241,8 +241,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-14 11:33" pubdate>
-        2022年9月14日 中午
+      <time datetime="2023-02-11 11:33" pubdate>
+        2023年2月11日 中午
       </time>
     </span>
   
@@ -252,7 +252,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.5k 字
+      1.5k 字
     </span>
   
 
@@ -261,7 +261,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      22 分钟
+      13 分钟
     </span>
   
 
@@ -290,57 +290,23 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上</h1>
+            <h1 style="display: none">【硬件数据模拟】 使用Modbus Slave软件模拟数据</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 小时前
+                  本文最后更新于：21 分钟前
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="创建正则对象"><a href="#创建正则对象" class="headerlink" title="创建正则对象"></a>创建正则对象</h1><ul>
-<li><p>使用对象创建<br>匹配模式：<br>      i：忽略大写写<br>      g：匹配全局模式<br>      ig：忽略大小写且全局匹配模式<br>      m:执行多行匹配</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg=<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&quot;ab&quot;</span>,<span class="hljs-string">&quot;i&quot;</span>)<br> <span class="hljs-keyword">let</span> str=<span class="hljs-string">&quot;aBc&quot;</span><br> <span class="hljs-keyword">let</span> result=reg.<span class="hljs-title function_">test</span>(str)<br> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result)<br></code></pre></div></td></tr></table></figure></li>
-<li><p>使用字面量创建</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str=<span class="hljs-string">&quot;aBc&quot;</span><br><span class="hljs-keyword">let</span> reg1=<span class="hljs-regexp">/ab/i</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(reg1.<span class="hljs-title function_">test</span>(str))<br></code></pre></div></td></tr></table></figure>
-<p>注意可以为一个正则表达式设置多个匹配模式，顺序无所谓</p>
-<h1 id="正则进阶"><a href="#正则进阶" class="headerlink" title="正则进阶"></a>正则进阶</h1></li>
-<li><p>需求信息：创建一个正则表达式，检查一个字符串中是否含有a或b</p>
-</li>
-<li><p>语法格式：使用|表示或者的意思</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">/* </span><br><span class="hljs-comment">     需求：创建一个正则表达式，检查一个字符串中是否含有a或b</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">const</span> reg=<span class="hljs-regexp">/a|b|c/</span><br><span class="hljs-keyword">let</span> str=<span class="hljs-string">&quot;aBc&quot;</span><br><span class="hljs-keyword">let</span> result=reg.<span class="hljs-title function_">test</span>(str)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result)<br></code></pre></div></td></tr></table></figure></li>
-<li><p>那么我们如何检查一个字符串中是否含有小写字母或字母呢</p>
-</li>
-<li><p>这里我们就有一个需求创建一个字符表达式，检查字符串中是否含有字母</p>
-</li>
-<li><p>提示：常见组合：<br>     [a-z]:任意小写字母<br>     [A-Z]:任意大写字母<br>     [A-z]:任意字符<br>     [0-9]：任意数字</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg1=<span class="hljs-regexp">/[A-z]/</span><br><span class="hljs-keyword">let</span> str1=<span class="hljs-string">&quot;12a&quot;</span><br><span class="hljs-keyword">let</span> result1=reg1.<span class="hljs-title function_">test</span>(str1)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result1)<br></code></pre></div></td></tr></table></figure></li>
-<li><p>需求信息：创建一个正则表达式，检查字符串中是否除了数字还有其他字母</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg2=<span class="hljs-regexp">/[^0-9]/</span><br><span class="hljs-keyword">let</span> str2=<span class="hljs-string">&quot;12abc&quot;</span><br><span class="hljs-keyword">let</span> result2=reg1.<span class="hljs-title function_">test</span>(str2)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result2)<br></code></pre></div></td></tr></table></figure>
-<h1 id="正则方法"><a href="#正则方法" class="headerlink" title="正则方法"></a>正则方法</h1><p>这些正则方法其实都是字符串的方法，只不过将正则表达式作为参数。</p>
-</li>
-<li><p>split()方法：这个方法可以将一个字符串分为一个数组，方法中可以传递一个正则表达式作为参数，方法会根据正则表达式，来拆分字符串，并且是全局匹配</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;1a2b3c4d5e6f7&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">split</span>(<span class="hljs-regexp">/[A-z]/</span>);   <br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure></li>
-<li><p>search方法：这个方法可以搜索字符串中是否含有指定的内容，如果搜索到指定的内容，则返回第一次出现的索引，如果没有查到就返回-1，并且这个方法只会查找第一个，即使正则表达式加上了全局匹配也没用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;hello abc hello aec afc&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">search</span>(<span class="hljs-regexp">/a[bef]c/</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure></li>
-<li><p>match()方法：可以根据正则表达式，从一个字符串中将符合条件的内容提取出来，默认情况下只要找到第一个符合要求的内容后，就会停止检索。但是我们可以向正则表达式中设置全局匹配，这样就可以匹配全部的内容</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;1a2a3a4a5e6f7A8B9C&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">match</span>(<span class="hljs-regexp">/[a-z]/ig</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure></li>
-<li><p>replce()该方法会传入两个参数，第一个为正则表达式，第二个为替换内容，将正则表达式匹配的内容替换，默认只会替换第一个，同理我们也可以设置全局匹配</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;1a2a3a4a5e6f7A8B9C&quot;</span>;<br><span class="hljs-keyword">var</span> result = str.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[a-z]/gi</span>, <span class="hljs-string">&quot;@_@&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br></code></pre></div></td></tr></table></figure>
-<h1 id="正则量词"><a href="#正则量词" class="headerlink" title="正则量词"></a>正则量词</h1></li>
-<li><p>通过量词可以设置一个内容出现的次数，量词只对它前边的一个内容起作用，如果有多个内容可以使用 () 括起来，常见量词如下：<br>      {n} ：正好出现n次<br>      {m,} ：出现m次及以上<br>      {m,n} ：出现m-n次<br>      + ：至少一个，相当于{1,}<br>      * ：0个或多个，相当于{0,}<br>      ? ：0个或1个，相当于{0,1}</p>
-</li>
-<li><p>如果我们要检查或者说判断是否以某个字符或者字符序列开头或者结尾就会使用^和$。<br>      ^ ：表示开头，注意它在[^字符序列]表达的意思不一样<br>      $ ：表示结尾</p>
-</li>
-<li><p>那如果我们想要检查一个字符串中是否含有.和\就会使用转义字符<br>      . ：表示.<br>      \ ：表示<br>      注意：使用构造函数时，由于它的参数是一个字符串，而\是字符串中转义字符，如果要使用\则需要使用\来代替<br><br>      除了以上两种特殊的字符，其实还有很多如下所示：<br>      \w ：任意字母、数字、<em>，相当于[A-z0-9</em>]<br>      \W ：除了字母、数字、<em>，相当于[^A-z0-9</em>]<br>      \d ：任意的数字，相当于[0-9]<br>      \D ：除了任意的数字，相当于[^0-9]<br>      \s ：空格<br>      \S ：除了空格<br>      \b ：单词边界<br>      \B ：除了单词边界</p>
-</li>
+              <h1 id="下载Modbus-Slave软件"><a href="#下载Modbus-Slave软件" class="headerlink" title="下载Modbus Slave软件"></a>下载Modbus Slave软件</h1><p> 下载完成之后，单击Connection-&gt;Connect,弹出注册窗口。这个软件有一个月的试用，或者是在网上找该软件的破解方式。弹出窗口如图所示：<br> <img src="http://imghe.xyz/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/modbusSalve.png" srcset="/img/loading.gif" lazyload alt="点击连接"></p>
+<h1 id="设置参数"><a href="#设置参数" class="headerlink" title="设置参数"></a>设置参数</h1><p>  ip设置为本机地址，端口设置为502，波特率设置为9600，协议设置为Modbbus Tcp&#x2F;Ip,串口设置为COM1。</p>
+<h1 id="连接Modbus-Slave"><a href="#连接Modbus-Slave" class="headerlink" title="连接Modbus Slave"></a>连接Modbus Slave</h1><ul>
+<li>Modbus还有一个客户端，modbus poll专门用来测试modbus连接，但是这里我展示用node.js获取的Modbus Slave模拟数据。</li>
+<li>引入modbus-serial包， 使用npm i modbus-serial下载安装，新建modbus-port.js文件，代码如下<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// create an empty modbus client</span><br><span class="hljs-keyword">var</span> <span class="hljs-title class_">ModbusRTU</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;modbus-serial&quot;</span>)<br><span class="hljs-keyword">var</span> <span class="hljs-title class_">ModbusRTUClient</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ModbusRTU</span>();<br><br><span class="hljs-comment">// open connection to a tcp line</span><br><span class="hljs-comment">// 创建Modbus TCP连接，IP是127.0.0.1,端口502</span><br><span class="hljs-title class_">ModbusRTUClient</span>.<span class="hljs-title function_">connectTCP</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>, &#123; <span class="hljs-attr">port</span>: <span class="hljs-number">502</span> &#125;);<br><br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-title class_">ModbusRTUClient</span><br></code></pre></div></td></tr></table></figure>
+新建一个publish.js发布收到的模拟数据<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">const</span> moment = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;moment&#x27;</span>);<br><span class="hljs-keyword">const</span> mqtt = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;mqtt&#x27;</span>);<br><span class="hljs-keyword">const</span> <span class="hljs-title class_">MqttServer</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./server&#x27;</span>); <span class="hljs-comment">// 这里是我创建的mqtt服务器</span><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">ModbusRTUClient</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./modbus-port.js&#x27;</span>);<br><span class="hljs-keyword">const</span> client1 = mqtt.<span class="hljs-title function_">connect</span>(<span class="hljs-string">&#x27;mqtt://127.0.0.1:1883&#x27;</span>); <span class="hljs-comment">// 这里是我创建的mqtt服务器</span><br><br><span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-title class_">ModbusRTUClient</span>.<span class="hljs-title function_">readHoldingRegisters</span>(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">err, data</span>)&#123;<br>    <span class="hljs-comment">// 获取当前时间</span><br>    <span class="hljs-comment">//moment.locale(&#x27;zh-cn&#x27;);</span><br>    <span class="hljs-keyword">let</span> value =  data.<span class="hljs-property">data</span>[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">let</span> humidity = data.<span class="hljs-property">data</span>[<span class="hljs-number">1</span>];<br>    client1.<span class="hljs-title function_">publish</span>(<span class="hljs-string">&quot;temperature&quot;</span>, value.<span class="hljs-title function_">toString</span>(), &#123; <span class="hljs-attr">qos</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">retain</span>: <span class="hljs-literal">true</span> &#125;); <span class="hljs-comment">// 使用mqtt服务发布</span><br>    client1.<span class="hljs-title function_">publish</span>(<span class="hljs-string">&quot;humidity&quot;</span>, humidity.<span class="hljs-title function_">toString</span>(), &#123; <span class="hljs-attr">qos</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">retain</span>: <span class="hljs-literal">true</span> &#125;);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;----------------------------------------------------------------------&quot;</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;数据时间是：&quot;</span> + <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;YYYY年MM月DD日 HH时mm分ss秒&#x27;</span>));<br>&#125;);<br>&#125;, <span class="hljs-number">2000</span>);<br></code></pre></div></td></tr></table></figure></li>
 </ul>
-<h1 id="正则实例"><a href="#正则实例" class="headerlink" title="正则实例"></a>正则实例</h1><h2 id="用户正则"><a href="#用户正则" class="headerlink" title="用户正则"></a>用户正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">//⽤户名正则，4到16位（字母，数字，下划线，减号）</span><br>uPattern = <span class="hljs-regexp">/^[a-zA-Z0-9_-]&#123;4,16&#125;$/</span><br></code></pre></div></td></tr></table></figure>
-<h2 id="密码强度正则"><a href="#密码强度正则" class="headerlink" title="密码强度正则"></a>密码强度正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">//密码强度正则，最少6位，包括⾄少1个⼤写字母，1个⼩写字母，1个数字，1个特殊字符</span><br>pPattern = <span class="hljs-regexp">/^.*(?=.&#123;6,&#125;)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&amp;*? ]).*$/</span><br></code></pre></div></td></tr></table></figure>
-<h2 id="手机号正则"><a href="#手机号正则" class="headerlink" title="手机号正则"></a>手机号正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">mPattern = <span class="hljs-regexp">/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d&#123;8&#125;$/</span><br></code></pre></div></td></tr></table></figure>
-<h2 id="身份证号正则"><a href="#身份证号正则" class="headerlink" title="身份证号正则"></a>身份证号正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">cP = <span class="hljs-regexp">/^[1-9]\d&#123;5&#125;(18|19|([23]\d))\d&#123;2&#125;((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d&#123;3&#125;[0-9Xx]$/</span><br></code></pre></div></td></tr></table></figure>
-<h2 id="车牌号正则"><a href="#车牌号正则" class="headerlink" title="车牌号正则"></a>车牌号正则</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">cPattern = <span class="hljs-regexp">/^[京津沪渝冀豫云辽⿊湘皖鲁新苏浙赣鄂桂⽢晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]&#123;1&#125;[A-Z]&#123;1&#125;[A-Z0-9]&#123;4&#125;[A-Z0-9挂学警港澳]&#123;1&#125;$/</span><br></code></pre></div></td></tr></table></figure>
+<h1 id="这个软件还有很多用处，请参考其他文献使用……"><a href="#这个软件还有很多用处，请参考其他文献使用……" class="headerlink" title="这个软件还有很多用处，请参考其他文献使用……"></a>这个软件还有很多用处，请参考其他文献使用……</h1>
             </div>
             <hr>
             <div>
@@ -377,6 +343,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/02/14/modbus/mqtt%E7%9A%84%E4%BD%BF%E7%94%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">汉枫HF2211使用mqtt协议，获取modbus温湿度设备数据展示到界面上</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
